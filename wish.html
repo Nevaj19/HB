@@ -5,11 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NELLY · happy birthday 💜</title>
 <!-- works as is, nothing to edit.
-     optional 1: search for playlistUrl below and paste your playlist link.
-     optional 2: in the PHOTOS list below, swap any line for
-                 {img:"https://yourphoto.jpg", caption:"our first date"},
-                 to show real photos instead of the emoji cards.
-     to share: send her this file, or drag it onto netlify.com/drop for a free link. -->
+
+     HOW TO ADD REAL PHOTOS (2 minutes):
+     option a) go to postimages.org (no account needed), upload a photo,
+               copy the "Direct link", then in the PHOTOS list below paste it:
+               {img:"https://i.postimg.cc/xxxx/photo.jpg", caption:"our first date"},
+     option b) if you host on netlify.com/drop: put this html file and your
+               photos together in one folder, drag the whole folder in,
+               then just use the filename: {img:"photo1.jpg", caption:"us"},
+     any photo without a link keeps its cute emoji card instead.
+
+     optional: search for playlistUrl below and paste your playlist link.
+
+     IMPORTANT for the microphone: blowing out candles with her breath only
+     works when the page is opened as a real link (https, like netlify).
+     If she opens the raw file, tapping the flames still works as backup. -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Quicksand:wght@500;600;700&family=Dancing+Script:wght@700&display=swap');
 
@@ -46,14 +56,9 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
 .line b{color:var(--gold)}
 .line .hl{color:var(--lilac)}
 
-/* falling reveal */
-.fall{opacity:0;transform:translateY(-70px) rotate(-3deg);transition:opacity .8s ease,transform .8s cubic-bezier(.2,1.4,.4,1)}
-.show .fall{opacity:1;transform:translateY(0) rotate(0)}
-.show .fall.d1{transition-delay:.15s}
-.show .fall.d2{transition-delay:.35s}
-.show .fall.d3{transition-delay:.55s}
+/* reveals */
 .rise{opacity:0;transform:translateY(45px);transition:opacity .8s ease,transform .8s ease}
-.show .rise{opacity:1;transform:none}
+.show .rise,.rise.show{opacity:1;transform:none}
 .show .rise.d1{transition-delay:.2s}
 .show .rise.d2{transition-delay:.4s}
 
@@ -73,16 +78,21 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
 .scrolldown{margin-top:36px;font-size:1.7rem;animation:bob 1.6s ease-in-out infinite;opacity:.75}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
 
-/* polaroids */
-.polrow{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+/* memory rain */
+#rainSec{display:block;min-height:380svh;max-width:680px}
+.rain-item{position:absolute;opacity:0;transform:translateY(-110px) rotate(calc(var(--rot) - 12deg));
+  transition:opacity .9s ease,transform .9s cubic-bezier(.2,1.4,.4,1)}
+.rain-item.show{opacity:1;transform:translateY(0) rotate(var(--rot))}
 .polaroid{background:#FBF7FF;color:#2A1B4D;padding:10px 10px 13px;border-radius:6px;width:165px;
   box-shadow:0 18px 44px rgba(0,0,0,.45)}
-.polaroid:nth-child(odd){rotate:-4deg}
-.polaroid:nth-child(even){rotate:3.5deg}
-.polaroid .ph{width:100%;height:130px;border-radius:4px;display:flex;align-items:center;justify-content:center;
+.polaroid .ph{width:100%;height:135px;border-radius:4px;display:flex;align-items:center;justify-content:center;
   font-size:3rem;background:linear-gradient(135deg,var(--lilac),var(--magenta));overflow:hidden}
 .polaroid .ph img{width:100%;height:100%;object-fit:cover}
 .polaroid figcaption{font-size:.82rem;font-weight:700;margin-top:9px}
+.pill{display:inline-block;background:rgba(18,11,38,.6);border:1px solid rgba(179,136,255,.4);backdrop-filter:blur(6px);
+  border-radius:999px;padding:12px 22px;font-weight:700;font-size:1rem;box-shadow:0 10px 30px rgba(0,0,0,.35);white-space:nowrap}
+.tscript{font-family:'Dancing Script',cursive;font-size:1.9rem;color:var(--gold);
+  text-shadow:0 0 20px rgba(245,200,107,.5);white-space:nowrap}
 
 /* letter */
 .letter{background:rgba(251,247,255,.07);border:1px solid rgba(179,136,255,.3);backdrop-filter:blur(8px);
@@ -112,6 +122,7 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
 .tier .drip{position:absolute;top:24%;width:100%;left:0;display:flex;justify-content:space-around;font-size:.95rem}
 .plate{width:100%;height:14px;background:#FBF7FF;border-radius:999px;margin-top:-4px;box-shadow:0 10px 26px rgba(0,0,0,.4)}
 #wishMsg{min-height:36px;font-weight:700;color:var(--gold);font-size:1.15rem;margin-top:18px}
+#micStatus{min-height:26px;font-weight:600;font-size:.92rem;opacity:.8;margin-top:8px}
 
 /* finale overlay */
 #finale{position:fixed;inset:0;z-index:30;display:none;flex-direction:column;align-items:center;justify-content:center;
@@ -129,6 +140,7 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
   box-shadow:0 8px 26px rgba(245,200,107,.35);transition:transform .2s;margin-top:24px;display:inline-block;text-decoration:none}
 .btn:hover{transform:translateY(-3px)}
 .btn:active{transform:scale(.96)}
+.btn.violet{background:linear-gradient(135deg,var(--lilac),var(--magenta));color:#fff;box-shadow:0 8px 26px rgba(179,136,255,.35)}
 
 #soundToggle{position:fixed;top:14px;right:14px;z-index:40;background:rgba(251,247,255,.1);border:1px solid rgba(179,136,255,.35);
   border-radius:50%;width:46px;height:46px;font-size:1.15rem;cursor:pointer;color:#fff;backdrop-filter:blur(6px)}
@@ -153,53 +165,26 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
     <div class="eyebrow">one night only · live from grenoble</div>
     <div class="headliner bebas">NELLY</div>
     <div class="tourline bebas">the 20th birthday tour</div>
-    <div class="smallline">For the sixth consecutive year </div>
+    <div class="smallline">For the sixth consecutive year</div>
   </div>
   <div class="smallline" style="margin-top:22px">tap anywhere for music 🎻 then scroll babyyy💜</div>
   <div class="scrolldown">⌄</div>
 </section>
 
-<!-- STORY SLIDES -->
-<section class="slide">
-  <div class="eyebrow rise">chapter one</div>
-  <div class="line rise d1">once upon a time, <b>exactly "20" +-5 years ago</b><br><span style="font-size:.8em;opacity:.75"></span></div>
-  <div class="polrow">
-    <figure class="polaroid fall d2"><div class="ph">🎀</div><figcaption>a legend was born</figcaption></figure>
-  </div>
+<!-- RAIN INTRO -->
+<section style="min-height:60svh" class="slide">
+  <div class="eyebrow rise">now, look up</div>
+  <div class="line rise d1">it's raining little pieces of us!!<br><span style="font-size:.8em;opacity:.75">scroll slowly, catch them all</span></div>
 </section>
 
-<section class="slide">
-  <div class="eyebrow rise">chapter two</div>
-  <div class="line rise d1">she grew up <b>brilliant</b>, <b>funny</b><br>and unfairly <span class="hl">beautiful</span></div>
-  <div class="polrow">
-    <figure class="polaroid fall d2"><div class="ph">📚</div><figcaption>the smart one</figcaption></figure>
-    <figure class="polaroid fall d3"><div class="ph">😂</div><figcaption>the funny one</figcaption></figure>
-  </div>
-</section>
+<!-- MEMORY RAIN (items are placed by the script) -->
+<section id="rainSec"></section>
 
+<!-- DISTANCE -->
 <section class="slide">
-  <div class="eyebrow rise">chapter three</div>
-  <div class="line rise d1">then one day, <b>she met me</b> 😌<br><span style="font-size:.8em;opacity:.75">easily the luckiest day of my life</span></div>
-  <div class="polrow">
-    <figure class="polaroid fall d2"><div class="ph">🥰</div><figcaption>the day it all started</figcaption></figure>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="eyebrow rise">chapter four</div>
+  <div class="eyebrow rise">the hard part</div>
   <div class="line rise d1">now <b>8,952 km</b> sit between us.<br>mauritius to grenoble.<br>planes. timezones. missed calls.<br><span style="font-size:.78em;opacity:.75">(yes, i measured. every single one hurts.)</span></div>
-  <div class="polrow">
-    <figure class="polaroid fall d2"><div class="ph">✈️</div><figcaption>airport tears, again</figcaption></figure>
-    <figure class="polaroid fall d3"><div class="ph">📞</div><figcaption>our 3am calls</figcaption></figure>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="eyebrow rise">and yet</div>
-  <div class="line rise d1"><b>same moon. same us.</b><br>8,952 km, and you have never once felt far 🌙</div>
-  <div class="polrow">
-    <figure class="polaroid fall d2"><div class="ph">🌙</div><figcaption>same moon, both of us</figcaption></figure>
-  </div>
+  <div class="line rise d2" style="margin-top:34px"><b>and yet. same moon. same us.</b><br>you have never once felt far 🌙</div>
 </section>
 
 <!-- LETTER -->
@@ -211,7 +196,7 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 <!-- CAKE -->
 <section class="slide" id="cakeSec">
   <div class="eyebrow rise">last thing, birthday girl</div>
-  <div class="line rise d1">25 candles would set off the fire alarm 🚒<br>so here are <b>5</b>, one for every year you've been 20.<br><b>tap the flames to blow them out</b></div>
+  <div class="line rise d1">25 candles would set off the fire alarm 🚒<br>so here are <b>5</b>, one for every year you've been 20.</div>
   <div class="cake-wrap rise d2">
     <div class="candles" id="candles"></div>
     <div class="tier top"><div class="drip">🍓 ✨ 🍓</div></div>
@@ -219,6 +204,8 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
     <div class="plate"></div>
   </div>
   <div id="wishMsg"></div>
+  <button class="btn violet" id="micBtn">blow them out for real 🎤🌬️</button>
+  <div id="micStatus">or just tap the flames 🔥</div>
 </section>
 
 <!-- FINALE -->
@@ -231,8 +218,36 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 </div>
 
 <script>
-/* ══ optional edits ══ */
+/* ══ EDIT ZONE ══════════════════════════════════════════════════ */
 const playlistUrl = ""; // paste your playlist link here and a button appears at the finale
+
+/* your photos. add a link inside img:"" to show a real photo,
+   leave it empty and the emoji card shows instead. */
+const PHOTOS = [
+  {img:"", emoji:"🎀", caption:"a legend was born"},
+  {img:"", emoji:"📚", caption:"the smart one"},
+  {img:"", emoji:"😂", caption:"the funny one"},
+  {img:"", emoji:"🥰", caption:"the day it all started"},
+  {img:"", emoji:"📞", caption:"our 3am calls"},
+  {img:"", emoji:"✈️", caption:"airport tears, again"},
+  {img:"", emoji:"🌙", caption:"same moon, both of us"},
+  {img:"", emoji:"💜", caption:"my favorite person"}
+];
+
+/* the cute texts raining between the photos. edit freely. */
+const TEXTS = [
+  'born exactly "20" ±5 years ago 🎀',
+  'still 20 btw',
+  'unfairly beautiful',
+  'the main character',
+  'my best decision ever',
+  'prettiest girl in grenoble',
+  'miss you every single day',
+  'you + me, always',
+  'my favorite notification 📱',
+  'forever and always 💜'
+];
+
 const letter =
 `my Nelly,
 
@@ -251,7 +266,7 @@ happy birthday my love.
 save me a dance for when i see you.
 
 yours, forever and always 💜`;
-/* ════════════════════ */
+/* ══ END OF EDIT ZONE ═══════════════════════════════════════════ */
 
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -279,7 +294,7 @@ const chime=(f=1046)=>{ensureAC();tone(f,AC.currentTime,.8,'sine',.13);tone(f*1.
 const F={D3:146.83,E3:164.81,Fs3:185.00,G3:196.00,A3:220.00,B3:246.94,Cs4:277.18,
         D4:293.66,E4:329.63,Fs4:369.99,G4:392.00,A4:440.00,B4:493.88,Cs5:554.37,
         D5:587.33,E5:659.25,Fs5:739.99,G5:783.99,A5:880.00};
-const CANON=[ /* [bass, third, fifth, melody] per bar */
+const CANON=[
   [F.D3,F.Fs4,F.A4,F.Fs5],[F.A3,F.Cs4,F.E4,F.E5],
   [F.B3,F.D4,F.Fs4,F.D5],[F.Fs3,F.A3,F.Cs4,F.Cs5],
   [F.G3,F.B3,F.D4,F.B4],[F.D3,F.Fs4,F.A4,F.A4],
@@ -298,13 +313,9 @@ function canonCycle(){
   });
   ambientTimer=setTimeout(canonCycle,CANON.length*1900-150);
 }
-function startAmbient(){
-  if(ambientOn)return;
-  ensureAC();ambientOn=true;canonCycle();
-}
+function startAmbient(){if(ambientOn)return;ensureAC();ambientOn=true;canonCycle();}
 function stopAmbient(){ambientOn=false;clearTimeout(ambientTimer);}
 
-/* happy birthday for the finale */
 const N={G4:392,A4:440,B4:493.88,C5:523.25,D5:587.33,E5:659.25,F5:698.46,G5:783.99};
 function happyBirthday(){
   if(muted||!AC)return;
@@ -335,7 +346,6 @@ document.getElementById('soundToggle').onclick=e=>{
   if(muted)stopAmbient();else{startAmbient();}
   e.stopPropagation();
 };
-/* first tap anywhere starts music */
 document.body.addEventListener('pointerdown',function once(){startAmbient();},{once:true});
 
 /* ── fireworks + heart confetti canvas ── */
@@ -381,14 +391,40 @@ function launchRocket(){
   ctx.globalAlpha=1;
 })();
 
+/* ── build the memory rain (random order + random positions) ── */
+const rainSec=document.getElementById('rainSec');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+const items=shuffle([
+  ...PHOTOS.map(p=>({kind:'photo',...p})),
+  ...TEXTS.map((t,i)=>({kind:i%2?'pill':'tscript',text:t}))
+]);
+items.forEach((it,i)=>{
+  const el=document.createElement('div');
+  el.className='rain-item';
+  el.style.setProperty('--rot',(Math.random()*14-7).toFixed(1)+'deg');
+  el.style.top=(2+i*(93/(items.length-1)))+'%';
+  if(it.kind==='photo'){
+    el.style.left=`min(${(Math.random()*55).toFixed(0)}%, calc(100% - 175px))`;
+    el.innerHTML=`<figure class="polaroid"><div class="ph">${it.img?`<img src="${it.img}" alt="${it.caption}">`:it.emoji}</div><figcaption>${it.caption}</figcaption></figure>`;
+  }else{
+    el.style.left=`min(${(Math.random()*50).toFixed(0)}%, calc(100% - 60vw))`;
+    el.innerHTML=it.kind==='pill'?`<span class="pill">${it.text}</span>`:`<span class="tscript">${it.text}</span>`;
+  }
+  rainSec.appendChild(el);
+});
+
 /* ── scroll reveals ── */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){
     e.target.classList.add('show');
     if(e.target.id==='letterSec')typeLetter();
+    if(e.target.classList.contains('rain-item')&&!reduceMotion){
+      const r=e.target.getBoundingClientRect();
+      burst(r.left+r.width/2,Math.max(30,r.top),6);
+    }
   }
-}),{threshold:.3});
-document.querySelectorAll('.slide').forEach(el=>io.observe(el));
+}),{threshold:.25});
+document.querySelectorAll('.slide,.rain-item').forEach(el=>io.observe(el));
 
 /* ── typed letter ── */
 let typed=false;
@@ -410,6 +446,7 @@ function typeLetter(){
 /* ── candles ── */
 const candlesEl=document.getElementById('candles');
 let lit=5;
+const blowFns=[];
 for(let i=0;i<5;i++){
   const c=document.createElement('div');c.className='candle';
   c.innerHTML='<div class="flame"></div>';
@@ -422,12 +459,49 @@ for(let i=0;i<5;i++){
     const msg=document.getElementById('wishMsg');
     msg.textContent=lit>0?`${lit} more to go…`:'✨ make a wish ✨';
     if(lit===0){
-      chime(1318);
+      chime(1318);stopMic();
       setTimeout(finale,1600);
     }
   };
+  blowFns.push(blow);
   c.onclick=blow;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' ')blow();};
   candlesEl.appendChild(c);
+}
+function blowNext(){const f=blowFns.find((fn,i)=>!candlesEl.children[i].classList.contains('out'));if(f)f();}
+
+/* ── microphone blow detection ── */
+let micOn=false,micStream=null,analyser=null,micData=null,lastBlow=0;
+const micStatus=document.getElementById('micStatus');
+document.getElementById('micBtn').onclick=async function(){
+  if(micOn)return;
+  try{
+    micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false}});
+    ensureAC();
+    const src=AC.createMediaStreamSource(micStream);
+    analyser=AC.createAnalyser();analyser.fftSize=1024;
+    src.connect(analyser);
+    micData=new Uint8Array(analyser.fftSize);
+    micOn=true;this.style.display='none';
+    micStatus.textContent='mic is on! now blow like it\u2019s a real cake 🌬️🎂';
+    micLoop();
+  }catch(err){
+    micStatus.textContent='no mic access here, tap the flames instead 🔥 (mic works when opened as a link)';
+  }
+};
+function micLoop(){
+  if(!micOn)return;
+  analyser.getByteTimeDomainData(micData);
+  let sum=0;
+  for(let i=0;i<micData.length;i++){const d=(micData[i]-128)/128;sum+=d*d;}
+  const rms=Math.sqrt(sum/micData.length);
+  if(rms>0.14&&Date.now()-lastBlow>420&&lit>0){
+    lastBlow=Date.now();blowNext();
+  }
+  if(lit>0)requestAnimationFrame(micLoop);
+}
+function stopMic(){
+  micOn=false;
+  if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;}
 }
 
 /* ── finale: fireworks ── */
