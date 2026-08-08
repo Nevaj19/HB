@@ -207,14 +207,16 @@ section{position:relative;z-index:2;min-height:76svh;display:flex;flex-direction
 /* ═══ UI ═══ */
 #soundToggle{position:fixed;top:50px;right:12px;z-index:41;background:rgba(251,247,255,.1);border:1px solid rgba(179,136,255,.35);
   border-radius:50%;width:44px;height:44px;font-size:1.1rem;cursor:pointer;color:#fff;backdrop-filter:blur(6px)}
-#ytBox{display:none;position:fixed;bottom:14px;left:14px;z-index:40;border-radius:14px;overflow:hidden;
-  box-shadow:0 12px 34px rgba(0,0,0,.55);border:1px solid rgba(179,136,255,.45);background:#000}
-#ytBox .yt-label{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;color:var(--gold);
-  background:rgba(14,10,36,.9);padding:5px 10px;text-transform:uppercase}
-#ytBox iframe{display:block;width:min(300px,74vw);height:169px;border:0}
-#ytClose{position:absolute;top:3px;right:6px;z-index:2;cursor:pointer;color:#fff;font-size:.8rem;padding:2px 4px}
-#ytMin{position:absolute;top:3px;right:30px;z-index:2;cursor:pointer;color:#fff;font-size:.8rem;padding:2px 4px}
-#ytBox.mini iframe{height:0}
+#songBtn{display:none;position:fixed;bottom:14px;left:14px;z-index:40;font-family:'Space Mono',monospace;
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;background:rgba(14,10,36,.88);border:1px solid rgba(245,200,107,.55);
+  color:var(--gold);border-radius:999px;padding:11px 16px;cursor:pointer;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+#ytHost{position:fixed;bottom:0;left:0;width:1px;height:1px;opacity:0.01;pointer-events:none;z-index:1;overflow:hidden}
+#ytHost.visible{width:min(300px,74vw);height:169px;opacity:1;pointer-events:auto;bottom:64px;left:14px;z-index:40;
+  border-radius:14px;box-shadow:0 12px 34px rgba(0,0,0,.55);border:1px solid rgba(179,136,255,.45);background:#000}
+#ytHost iframe{width:100%;height:100%;border:0;display:block}
+#ytHide{display:none;position:fixed;bottom:210px;left:14px;z-index:41;background:rgba(14,10,36,.9);color:#fff;
+  border:1px solid rgba(179,136,255,.45);border-radius:50%;width:26px;height:26px;font-size:.75rem;cursor:pointer;
+  align-items:center;justify-content:center}
 canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 
 @media (prefers-reduced-motion:reduce){
@@ -271,7 +273,9 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
   <div id="kmText">0 km of 8,952</div>
 </div>
 <button id="soundToggle" aria-label="toggle sound">🔊</button>
-<div id="ytBox"><div class="yt-label">in flight entertainment 🎧<span id="ytMin">➖</span><span id="ytClose">✕</span></div><iframe id="ytFrame" title="our song" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+<button id="songBtn">▶ our song 🎧</button>
+<button id="ytHide" aria-label="hide player">✕</button>
+<div id="ytHost"><div id="ytPlayer"></div></div>
 <canvas id="fx"></canvas>
 
 <!-- 1 · BOARDING -->
@@ -323,20 +327,6 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
   <div class="eyebrow rise">4,476 km · exactly halfway</div>
   <div class="line rise d1"><b>same moon. same us.</b> 🌙<br>it watches me in mauritius,<br>then checks on you in grenoble.</div>
   <figure class="bigframe rise d2"><div class="ph" id="bigPh">💜</div><figcaption class="script" id="bigCap">you. always you.</figcaption></figure>
-</section>
-
-<!-- 6 · THE HARD PART -->
-<section class="slide">
-  <div class="eyebrow rise">cabin announcement</div>
-  <div class="line rise d1">light turbulence ahead:<br>planes. timezones. missed calls.<br><span class="small">(yes, i measured: 8,952 km. every single one hurts.)</span></div>
-  <div class="line rise d2" style="margin-top:30px">but here's the thing…<br><b>you have never once felt far.</b></div>
-</section>
-
-<!-- 7 · DESCENT -->
-<section class="slide">
-  <div class="eyebrow rise">beginning descent</div>
-  <div class="line rise d1">the alps outside the window ❄<br>grenoble glowing below.<br>somewhere down there, the prettiest girl in france<br>is turning <span class="pk"><b>20</b></span> again 😌</div>
-  <div class="line rise d2 script" style="margin-top:26px;color:var(--gold);font-size:clamp(1.6rem,6vw,2.2rem)">this feels like somewhere only we know 🎵</div>
 </section>
 
 <!-- 8 · LETTER -->
@@ -621,16 +611,42 @@ if(BIG_PHOTO.img){bigPh.innerHTML=`<img src="${BIG_PHOTO.img}" alt="${BIG_PHOTO.
 else{bigPh.textContent=BIG_PHOTO.emoji;}
 document.getElementById('bigCap').textContent=BIG_PHOTO.caption;
 
-/* her song via youtube */
+/* her song via youtube, invisible player with a tiny pill button */
+let ytPlayer=null,ytPlaying=false,ytReady=false,fbTimer=null;
 if(SONG_YOUTUBE_ID){
   const ytid=SONG_YOUTUBE_ID.split(/[?&\/]/)[0].trim();
-  const box=document.getElementById('ytBox');
-  box.style.display='block';
-  document.getElementById('ytFrame').src=`https://www.youtube.com/embed/${ytid}?loop=1&playlist=${ytid}`;
-  document.getElementById('musicHint').textContent='press play on our song 🎶 tap ➖ to tuck it away, then scroll babyyy💜';
-  document.getElementById('ytClose').onclick=()=>{document.getElementById('ytFrame').src='';box.remove();};
-  const ymin=document.getElementById('ytMin');
-  ymin.onclick=()=>{const mini=box.classList.toggle('mini');ymin.textContent=mini?'🎵':'➖';};
+  const songBtn=document.getElementById('songBtn');
+  const ytHost=document.getElementById('ytHost');
+  const ytHide=document.getElementById('ytHide');
+  songBtn.style.display='block';
+  document.getElementById('musicHint').textContent='tap ▶ our song for music 🎶 then scroll babyyy💜';
+  const tag=document.createElement('script');
+  tag.src='https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+  window.onYouTubeIframeAPIReady=function(){
+    ytPlayer=new YT.Player('ytPlayer',{
+      videoId:ytid,
+      playerVars:{loop:1,playlist:ytid,playsinline:1},
+      events:{
+        onReady:()=>{ytReady=true;},
+        onStateChange:st=>{
+          ytPlaying=(st.data===1);
+          songBtn.textContent=ytPlaying?'⏸ our song 🎧':'▶ our song 🎧';
+          if(ytPlaying){clearTimeout(fbTimer);}
+        }
+      }
+    });
+  };
+  songBtn.onclick=()=>{
+    if(!ytReady||!ytPlayer)return;
+    if(ytPlaying){ytPlayer.pauseVideo();return;}
+    ytPlayer.playVideo();
+    clearTimeout(fbTimer);
+    fbTimer=setTimeout(()=>{ /* this phone wants a visible player, show it once */
+      if(!ytPlaying){ytHost.classList.add('visible');ytHide.style.display='flex';}
+    },2000);
+  };
+  ytHide.onclick=()=>{ytHost.classList.remove('visible');ytHide.style.display='none';};
 }
 
 /* ── flight progress engine ── */
