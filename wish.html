@@ -3,144 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NELLY · happy birthday 💜</title>
-<!-- works as is, nothing to edit.
-
-     HOW TO ADD REAL PHOTOS (2 minutes):
-     option a) go to postimages.org (no account needed), upload a photo,
-               copy the "Direct link", then in the PHOTOS list below paste it:
-               {img:"https://i.postimg.cc/xxxx/photo.jpg", caption:"our first date"},
-     option b) if you host on netlify.com/drop: put this html file and your
-               photos together in one folder, drag the whole folder in,
-               then just use the filename: {img:"photo1.jpg", caption:"us"},
-     any photo without a link keeps its cute emoji card instead.
-
-     optional: search for playlistUrl below and paste your playlist link.
-
-     IMPORTANT for the microphone: blowing out candles with her breath only
-     works when the page is opened as a real link (https, like netlify).
-     If she opens the raw file, tapping the flames still works as backup. -->
+<title>flight N20 · MRU → GNB 💜</title>
+<!-- ══════════════════════════════════════════════════════════════
+     NELLY'S BIRTHDAY FLIGHT · works as is, nothing required.
+     the edit zone is at the top of the script below:
+       playlistUrl      your acrostic playlist link (optional)
+       SONG_YOUTUBE_ID  youtube ID of "invisible string instrumental" (optional)
+       PHOTOS           your photos, img:"photo1.jpg" if uploaded to the repo
+       BIG_PHOTO        the one big photo at the halfway point
+       TEXTS            the little messages floating in the sky
+       letter           your typed letter
+     the microphone candle blowing works because github pages is https.
+     ══════════════════════════════════════════════════════════════ -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Quicksand:wght@500;600;700&family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Quicksand:wght@500;600;700&family=Dancing+Script:wght@700&display=swap');
 
 :root{
-  --stage:#120B26; --indigo:#1E1440; --violet:#5B3A9E; --lilac:#B388FF;
-  --gold:#F5C86B; --gold-hot:#FFDF9E; --magenta:#FF6FD8; --white:#FBF7FF;
-  --mint:#7CF2C3; --sky:#8FE3FF; --coral:#FF9D6F;
+  --night:#0E0A24; --indigo:#1C1440; --violet:#4A2F86;
+  --lilac:#B388FF; --pink:#FF8FC8; --gold:#F5C86B; --gold-hot:#FFDF9E;
+  --sunset:#FF7E5F; --peach:#FFB47A; --white:#FBF7FF; --ink:#241A4A; --cream:#FFF6E9;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{
   font-family:'Quicksand',sans-serif;color:var(--white);
-  background:radial-gradient(ellipse 120% 70% at 50% -10%,var(--violet) 0%,var(--indigo) 45%,var(--stage) 100%);
+  background:linear-gradient(180deg,#2A1348 0%,var(--indigo) 42%,var(--night) 100%);
   background-attachment:fixed;overflow-x:hidden;
 }
-.bebas{font-family:'Bebas Neue',sans-serif;letter-spacing:.04em}
+.bebas{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em}
+.mono{font-family:'Space Mono',monospace}
 .script{font-family:'Dancing Script',cursive}
 
-/* spotlights + sparkles */
-.beam{position:fixed;top:-12vh;width:34vw;height:120vh;z-index:0;pointer-events:none;opacity:.45;
-  background:linear-gradient(180deg,rgba(179,136,255,.5),rgba(179,136,255,0) 75%);
-  clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);transform-origin:top center}
-.beam.l{left:-6vw;animation:swayL 7s ease-in-out infinite alternate}
-.beam.r{right:-6vw;background:linear-gradient(180deg,rgba(255,111,216,.4),rgba(255,111,216,0) 75%);animation:swayR 8s ease-in-out infinite alternate}
-@keyframes swayL{from{transform:rotate(-14deg)}to{transform:rotate(10deg)}}
-@keyframes swayR{from{transform:rotate(14deg)}to{transform:rotate(-10deg)}}
-.beam.c{left:34vw;width:24vw;opacity:.22;background:linear-gradient(180deg,rgba(124,242,195,.45),rgba(124,242,195,0) 75%);animation:swayL 9.5s ease-in-out infinite alternate-reverse}
-.blob{position:fixed;border-radius:50%;filter:blur(70px);opacity:.3;z-index:0;pointer-events:none;animation:blobFloat ease-in-out infinite alternate}
-@keyframes blobFloat{from{transform:translate(0,0) scale(1)}to{transform:translate(5vw,7vh) scale(1.14)}}
-.sp{position:fixed;color:var(--gold-hot);z-index:0;animation:tw 3.2s ease-in-out infinite;pointer-events:none;font-size:10px}
-@keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}
+/* ═══ SCENERY (fixed layers, controlled by scroll) ═══ */
+.star{position:fixed;background:#fff;border-radius:50%;z-index:0;animation:tw 3.6s ease-in-out infinite;pointer-events:none;box-shadow:0 0 6px rgba(255,255,255,.7)}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+.cloudy{position:fixed;border-radius:50%;background:#fff;filter:blur(40px);opacity:.06;z-index:0;pointer-events:none;animation:driftc linear infinite}
+@keyframes driftc{from{transform:translateX(-30vw)}to{transform:translateX(130vw)}}
 
-/* layout */
+#horizonGlow{position:fixed;left:0;right:0;bottom:0;height:44vh;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(255,126,95,.22) 55%,rgba(255,180,122,.4))}
+#island{position:fixed;left:0;right:0;bottom:0;height:26vh;z-index:1;pointer-events:none}
+#island svg{width:100%;height:100%;display:block}
+#moon{position:fixed;top:11vh;right:12vw;width:130px;height:130px;border-radius:50%;z-index:0;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 36% 34%,#FFFDF2,#F3E4C6 62%,#E8D2A8);
+  box-shadow:0 0 80px 26px rgba(255,240,200,.35),0 0 160px 60px rgba(255,240,200,.12)}
+#mtns{position:fixed;left:0;right:0;bottom:0;height:32vh;z-index:1;pointer-events:none;opacity:0}
+#mtns svg{width:100%;height:100%;display:block}
+.citylight{animation:tw 2.6s ease-in-out infinite}
+
+/* ═══ BIRTHDAY DECOR ═══ */
+#bunting{position:fixed;top:0;left:0;right:0;height:46px;z-index:39;pointer-events:none;opacity:.95;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+#bunting svg{width:100%;height:100%;display:block}
+.confp{position:fixed;z-index:0;pointer-events:none;border-radius:2px;animation:tw 3.6s ease-in-out infinite}
+.party-line{font-size:1.5rem;margin-top:12px;letter-spacing:.32em;animation:bob 2.4s ease-in-out infinite}
+
+/* ═══ FLIGHT HUD ═══ */
+#hud{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:40;text-align:center;
+  background:rgba(14,10,36,.62);border:1px solid rgba(179,136,255,.35);border-radius:16px;
+  padding:9px 18px 8px;backdrop-filter:blur(8px);box-shadow:0 8px 26px rgba(0,0,0,.35)}
+#hud .route{display:flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-weight:700;font-size:.8rem;color:var(--gold)}
+#hud .track{position:relative;width:min(130px,26vw);height:2px;background:rgba(251,247,255,.25);border-radius:2px}
+#hud .track::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 8px,rgba(251,247,255,.35) 8px 12px)}
+#planeIcon{position:absolute;top:50%;left:0;transform:translate(-50%,-58%);font-size:1rem;z-index:1;transition:left .15s linear;filter:drop-shadow(0 0 6px rgba(245,200,107,.7))}
+#kmText{font-family:'Space Mono',monospace;font-size:.68rem;opacity:.85;margin-top:3px;letter-spacing:.04em}
+
+/* ═══ LAYOUT ═══ */
 section{position:relative;z-index:2;min-height:100svh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;max-width:680px;margin:0 auto;padding:70px 24px;text-align:center}
-.eyebrow{font-weight:700;letter-spacing:.28em;text-transform:uppercase;font-size:.72rem;color:var(--gold);margin-bottom:16px}
-section:nth-of-type(2n) .eyebrow{color:var(--mint)}
-section:nth-of-type(3n) .eyebrow{color:var(--magenta)}
-section:nth-of-type(5n) .eyebrow{color:var(--sky)}
-.line{font-size:clamp(1.35rem,5.4vw,1.9rem);font-weight:600;line-height:1.6;max-width:520px}
+  align-items:center;justify-content:center;max-width:720px;margin:0 auto;padding:90px 24px;text-align:center}
+.eyebrow{font-family:'Space Mono',monospace;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  font-size:.7rem;color:var(--gold);margin-bottom:18px}
+.line{font-size:clamp(1.35rem,5.4vw,1.95rem);font-weight:600;line-height:1.65;max-width:560px}
 .line b{color:var(--gold)}
-.line .hl{color:var(--lilac)}
-
-/* reveals */
-.rise{opacity:0;transform:translateY(45px);transition:opacity .8s ease,transform .8s ease}
+.line .pk{color:var(--pink)}
+.small{font-size:.82em;opacity:.75}
+.rise{opacity:0;transform:translateY(45px);transition:opacity .9s ease,transform .9s ease}
 .show .rise,.rise.show{opacity:1;transform:none}
 .show .rise.d1{transition-delay:.2s}
 .show .rise.d2{transition-delay:.4s}
-
-/* hero marquee */
-.marquee{border:3px solid var(--gold);border-radius:20px;padding:36px 20px 32px;position:relative;width:100%;
-  background:rgba(18,11,38,.55);backdrop-filter:blur(4px);
-  box-shadow:0 0 60px rgba(245,200,107,.12), inset 0 0 40px rgba(245,200,107,.06)}
-.bulbs{position:absolute;inset:8px;border-radius:14px;pointer-events:none;
-  background-image:radial-gradient(circle 3px,var(--gold-hot) 45%,transparent 50%);
-  background-size:26px 26px;
-  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;padding:6px;opacity:.85;animation:blink 1.1s steps(2) infinite}
-@keyframes blink{50%{background-position:13px 13px}}
-.headliner{font-size:clamp(5rem,25vw,9.5rem);line-height:.92;filter:drop-shadow(0 0 20px rgba(179,136,255,.55))}
-.tourline{font-size:clamp(1.35rem,5.4vw,1.9rem);color:var(--gold);margin-top:8px}
-.smallline{font-size:.85rem;font-weight:600;opacity:.75;margin-top:14px;letter-spacing:.05em}
 .scrolldown{margin-top:36px;font-size:1.7rem;animation:bob 1.6s ease-in-out infinite;opacity:.75}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
 
-/* memory rain */
-#rainSec{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:15svh;max-width:900px;width:100%;min-height:auto;padding:90px 24px}
+.btn{font-family:'Quicksand',sans-serif;font-weight:700;font-size:1rem;border:none;cursor:pointer;
+  padding:15px 36px;border-radius:999px;color:var(--night);background:linear-gradient(135deg,var(--gold-hot),var(--gold));
+  box-shadow:0 8px 26px rgba(245,200,107,.35);transition:transform .2s;margin-top:26px;display:inline-block;text-decoration:none}
+.btn:hover{transform:translateY(-3px)}
+.btn:active{transform:scale(.96)}
+.btn.violet{background:linear-gradient(135deg,var(--lilac),var(--pink));color:#fff;box-shadow:0 8px 26px rgba(179,136,255,.35)}
+
+/* ═══ BOARDING PASS ═══ */
+.pass{position:relative;background:var(--cream);color:var(--ink);border-radius:16px;width:min(440px,92vw);
+  margin-top:26px;text-align:left;transform:rotate(-1.4deg);cursor:pointer;transition:transform .25s;
+  box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.pass:hover{transform:rotate(0) scale(1.015)}
+.pass::before,.pass::after{content:'';position:absolute;width:24px;height:24px;border-radius:50%;
+  background:var(--night);top:64%;transform:translateY(-50%)}
+.pass::before{left:-13px}
+.pass::after{right:-13px}
+.p-head{display:flex;justify-content:space-between;font-size:.68rem;font-weight:700;letter-spacing:.14em;
+  padding:14px 20px 10px;border-bottom:2px dashed rgba(36,26,74,.25)}
+.p-route{display:flex;align-items:center;justify-content:space-between;padding:16px 24px 6px}
+.p-route .code{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;line-height:1;letter-spacing:.04em}
+.p-route .lbl{font-size:.72rem;font-weight:700;opacity:.6;letter-spacing:.08em}
+.p-plane{font-size:1.4rem;animation:hover 2.4s ease-in-out infinite}
+@keyframes hover{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;padding:12px 24px 16px;font-size:.82rem}
+.p-grid b{display:block;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.14em;opacity:.55;text-transform:uppercase}
+.barcode{height:44px;margin:0 20px 18px;border-radius:4px;
+  background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 5px,var(--ink) 5px 8px,transparent 8px 10px,var(--ink) 10px 11px,transparent 11px 16px)}
+.stamp{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-12deg) scale(3);opacity:0;
+  border:4px solid var(--pink);color:var(--pink);border-radius:12px;padding:7px 16px;
+  font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.1em;pointer-events:none;
+  box-shadow:0 0 24px rgba(255,143,200,.4),inset 0 0 18px rgba(255,143,200,.12)}
+.stamp.on{animation:slam .45s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes slam{to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+.tap-hint{font-size:.85rem;opacity:.6;font-weight:600;margin-top:16px}
+
+/* ═══ MEMORY SKY ═══ */
+#memSky{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+  gap:15svh;max-width:920px;width:100%;min-height:auto;padding:90px 24px}
 .rain-row{display:flex;width:100%}
 .rain-row.j0{justify-content:flex-start}
 .rain-row.j1{justify-content:center}
 .rain-row.j2{justify-content:flex-end}
-.rain-item{opacity:0;transform:translateY(-110px) rotate(calc(var(--rot) - 12deg));
+.rain-item{opacity:0;transform:translateY(-110px) rotate(calc(var(--rot) - 12deg));cursor:pointer;
   transition:opacity .9s ease,transform .9s cubic-bezier(.2,1.4,.4,1)}
 .rain-item.show{opacity:1;transform:translateY(0) rotate(var(--rot))}
-.polaroid{background:#FBF7FF;color:#2A1B4D;padding:10px 10px 13px;border-radius:6px;width:165px;
-  box-shadow:0 18px 44px rgba(0,0,0,.45)}
-.polaroid .ph{width:100%;height:135px;border-radius:4px;display:flex;align-items:center;justify-content:center;
-  font-size:3rem;background:linear-gradient(135deg,var(--lilac),var(--magenta));overflow:hidden}
+.polaroid{background:var(--white);color:var(--ink);padding:10px 10px 13px;border-radius:6px;width:172px;
+  box-shadow:0 18px 44px rgba(0,0,0,.5)}
+.polaroid .ph{width:100%;height:140px;border-radius:4px;display:flex;align-items:center;justify-content:center;
+  font-size:3rem;overflow:hidden}
+.ph.g0{background:linear-gradient(135deg,var(--lilac),var(--pink))}
+.ph.g1{background:linear-gradient(135deg,var(--pink),var(--peach))}
+.ph.g2{background:linear-gradient(135deg,var(--violet),var(--lilac))}
 .polaroid .ph img{width:100%;height:100%;object-fit:cover}
 .polaroid figcaption{font-size:.82rem;font-weight:700;margin-top:9px}
-.pill{display:inline-block;background:rgba(18,11,38,.6);border:1px solid rgba(179,136,255,.4);backdrop-filter:blur(6px);
-  border-radius:999px;padding:12px 22px;font-weight:700;font-size:1rem;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:min(78vw,340px);white-space:normal;line-height:1.45}
+.pill{display:inline-block;background:rgba(14,10,36,.6);border:1px solid rgba(245,200,107,.45);backdrop-filter:blur(6px);
+  border-radius:999px;padding:12px 22px;font-weight:700;font-size:1rem;color:var(--gold-hot);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:min(78vw,340px);line-height:1.45}
+.pill.alt{border-color:rgba(255,143,200,.5);color:#FFD3EA}
 .tscript{font-family:'Dancing Script',cursive;font-size:clamp(1.5rem,4.6vw,2.1rem);color:var(--gold);
-  text-shadow:0 0 20px rgba(245,200,107,.5);white-space:normal;max-width:min(80vw,380px);display:inline-block;line-height:1.25}
+  text-shadow:0 0 20px rgba(245,200,107,.5);max-width:min(80vw,380px);display:inline-block;line-height:1.25}
+.tscript.alt{color:var(--pink);text-shadow:0 0 20px rgba(255,143,200,.5)}
+@media (min-width:700px){.polaroid{width:210px}.polaroid .ph{height:172px}}
 
-/* colour variants */
-.ph.g0{background:linear-gradient(135deg,var(--lilac),var(--magenta))}
-.ph.g1{background:linear-gradient(135deg,var(--magenta),var(--coral))}
-.ph.g2{background:linear-gradient(135deg,var(--sky),var(--lilac))}
-.ph.g3{background:linear-gradient(135deg,var(--mint),var(--sky))}
-.ph.g4{background:linear-gradient(135deg,var(--gold),var(--magenta))}
-.pill.p1{border-color:rgba(255,111,216,.55);color:#FFC9EC}
-.pill.p2{border-color:rgba(124,242,195,.5);color:#C9F7E4}
-.pill.p3{border-color:rgba(143,227,255,.5);color:#D8F3FF}
-.tscript.c1{color:var(--magenta);text-shadow:0 0 20px rgba(255,111,216,.5)}
-.tscript.c2{color:var(--mint);text-shadow:0 0 20px rgba(124,242,195,.5)}
-.tscript.c3{color:var(--sky);text-shadow:0 0 20px rgba(143,227,255,.5)}
-
-/* big photo frame */
-.bigframe{background:#FBF7FF;padding:14px 14px 18px;border-radius:10px;transform:rotate(-1.5deg);
-  width:min(460px,90vw);box-shadow:0 24px 70px rgba(0,0,0,.5),0 0 70px rgba(255,111,216,.25);margin-top:10px}
-.bigframe .ph{width:100%;height:min(440px,56svh);border-radius:6px;display:flex;align-items:center;justify-content:center;
-  font-size:6rem;background:linear-gradient(135deg,var(--magenta),var(--lilac),var(--sky));overflow:hidden}
+/* ═══ BIG PHOTO ═══ */
+.bigframe{background:var(--white);padding:14px 14px 18px;border-radius:10px;transform:rotate(-1.4deg);
+  width:min(460px,90vw);box-shadow:0 24px 70px rgba(0,0,0,.55),0 0 70px rgba(255,143,200,.22);margin-top:26px}
+.bigframe .ph{width:100%;height:min(440px,54svh);border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:6rem;background:linear-gradient(135deg,var(--pink),var(--lilac),var(--violet));overflow:hidden}
 .bigframe .ph img{width:100%;height:100%;object-fit:cover}
-.bigframe figcaption{font-size:1.9rem;color:#2A1B4D;margin-top:12px}
+.bigframe figcaption{font-size:1.9rem;color:var(--ink);margin-top:12px}
 
-/* letter */
+/* ═══ LETTER ═══ */
 .letter{background:rgba(251,247,255,.07);border:1px solid rgba(179,136,255,.3);backdrop-filter:blur(8px);
-  border-radius:20px;max-width:500px;width:100%;padding:36px 30px;text-align:left;box-shadow:0 14px 44px rgba(0,0,0,.35)}
+  border-radius:20px;max-width:520px;width:100%;padding:36px 30px;text-align:left;box-shadow:0 14px 44px rgba(0,0,0,.4)}
 .letter::before{content:'💌';display:block;text-align:center;font-size:2rem;margin-bottom:14px}
 #letterText{font-size:1.12rem;line-height:1.95;white-space:pre-wrap;min-height:260px;font-weight:500}
 .cursor{display:inline-block;width:2px;height:1.1em;background:var(--gold);vertical-align:text-bottom;animation:blink2 .8s step-end infinite}
 @keyframes blink2{50%{opacity:0}}
 
-/* cake + candles */
+/* ═══ CAKE ═══ */
 .cake-wrap{position:relative;margin:34px auto 4px;width:min(320px,84vw)}
 .candles{display:flex;justify-content:center;gap:26px;margin-bottom:-4px;position:relative;z-index:2}
 .candle{width:14px;height:60px;border-radius:6px;position:relative;cursor:pointer;
-  background:repeating-linear-gradient(45deg,#FBF7FF,#FBF7FF 6px,var(--lilac) 6px,var(--lilac) 12px)}
-.candle:nth-child(2n){background:repeating-linear-gradient(45deg,#FBF7FF,#FBF7FF 6px,var(--magenta) 6px,var(--magenta) 12px)}
-.candle:nth-child(3n){background:repeating-linear-gradient(45deg,#FBF7FF,#FBF7FF 6px,var(--gold) 6px,var(--gold) 12px)}
+  background:repeating-linear-gradient(45deg,var(--white),var(--white) 6px,var(--lilac) 6px,var(--lilac) 12px)}
+.candle:nth-child(2n){background:repeating-linear-gradient(45deg,var(--white),var(--white) 6px,var(--pink) 6px,var(--pink) 12px)}
+.candle:nth-child(3n){background:repeating-linear-gradient(45deg,var(--white),var(--white) 6px,var(--gold) 6px,var(--gold) 12px)}
 .flame{position:absolute;top:-25px;left:50%;transform:translateX(-50%);width:16px;height:25px;
   background:radial-gradient(circle at 50% 75%,#FFFDE0 0%,var(--gold) 45%,#FF9D3C 80%);
   border-radius:50% 50% 50% 50%/62% 62% 38% 38%;animation:flick .35s ease-in-out infinite alternate;
@@ -150,133 +179,178 @@ section:nth-of-type(5n) .eyebrow{color:var(--sky)}
 .smoke{position:absolute;top:-32px;left:50%;font-size:20px;opacity:0;animation:smokeUp 1.2s ease-out forwards}
 @keyframes smokeUp{0%{opacity:.9;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-44px)}}
 .tier{margin:0 auto;border-radius:16px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.18)}
-.tier.top{width:62%;height:64px;background:linear-gradient(180deg,#FBF7FF 28%,var(--lilac) 28%)}
-.tier.bottom{width:88%;height:80px;background:linear-gradient(180deg,#FBF7FF 24%,var(--violet) 24%);margin-top:-6px}
+.tier.top{width:62%;height:64px;background:linear-gradient(180deg,var(--white) 28%,var(--lilac) 28%)}
+.tier.bottom{width:88%;height:80px;background:linear-gradient(180deg,var(--white) 24%,var(--violet) 24%);margin-top:-6px}
 .tier .drip{position:absolute;top:24%;width:100%;left:0;display:flex;justify-content:space-around;font-size:.95rem}
-.plate{width:100%;height:14px;background:#FBF7FF;border-radius:999px;margin-top:-4px;box-shadow:0 10px 26px rgba(0,0,0,.4)}
+.plate{width:100%;height:14px;background:var(--white);border-radius:999px;margin-top:-4px;box-shadow:0 10px 26px rgba(0,0,0,.45)}
 #wishMsg{min-height:36px;font-weight:700;color:var(--gold);font-size:1.15rem;margin-top:18px}
 #micStatus{min-height:26px;font-weight:600;font-size:.92rem;opacity:.8;margin-top:8px}
 
-/* finale overlay */
+/* ═══ FINALE ═══ */
 #finale{position:fixed;inset:0;z-index:30;display:none;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:26px;background:radial-gradient(ellipse at 50% 30%,rgba(91,58,158,.9),rgba(18,11,38,.96))}
+  text-align:center;padding:26px;background:radial-gradient(ellipse at 50% 30%,rgba(74,47,134,.9),rgba(14,10,36,.96))}
 #finale.on{display:flex;animation:fadeIn 1s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 #finale .bebas{font-size:clamp(3.2rem,14vw,6.2rem);line-height:1.02;text-shadow:0 0 30px rgba(179,136,255,.8)}
 #finale .strike{position:relative;color:rgba(251,247,255,.4);font-size:.5em;vertical-align:middle;margin:0 8px}
-#finale .strike::after{content:'';position:absolute;left:-6%;top:52%;width:112%;height:5px;background:var(--magenta);transform:rotate(-7deg);border-radius:3px}
+#finale .strike::after{content:'';position:absolute;left:-6%;top:52%;width:112%;height:5px;background:var(--pink);transform:rotate(-7deg);border-radius:3px}
 #finale .twenty{color:var(--gold);text-shadow:0 0 40px rgba(245,200,107,.8)}
 #finale .script{font-size:clamp(1.7rem,6.5vw,2.4rem);color:var(--lilac);margin-top:18px}
-#finale .hint{font-size:.9rem;opacity:.65;font-weight:600;margin-top:12px}
-.btn{font-family:'Quicksand',sans-serif;font-weight:700;font-size:1rem;border:none;cursor:pointer;
-  padding:15px 36px;border-radius:999px;color:var(--stage);background:linear-gradient(135deg,var(--gold-hot),var(--gold));
-  box-shadow:0 8px 26px rgba(245,200,107,.35);transition:transform .2s;margin-top:24px;display:inline-block;text-decoration:none}
-.btn:hover{transform:translateY(-3px)}
-.btn:active{transform:scale(.96)}
-.btn.violet{background:linear-gradient(135deg,var(--lilac),var(--magenta));color:#fff;box-shadow:0 8px 26px rgba(179,136,255,.35)}
-
-#ytBox{display:none;position:fixed;bottom:14px;left:14px;z-index:40;border-radius:14px;overflow:hidden;
-  box-shadow:0 12px 34px rgba(0,0,0,.55);border:1px solid rgba(179,136,255,.45);background:#000}
-#ytBox iframe{display:block;width:min(300px,74vw);height:169px;border:0}
-#ytClose{position:absolute;top:4px;right:6px;z-index:2;cursor:pointer;background:rgba(18,11,38,.78);color:#fff;
-  border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.75rem}
-#soundToggle{position:fixed;top:14px;right:14px;z-index:40;background:rgba(251,247,255,.1);border:1px solid rgba(179,136,255,.35);
-  border-radius:50%;width:46px;height:46px;font-size:1.15rem;cursor:pointer;color:#fff;backdrop-filter:blur(6px)}
-canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
-
-@media (min-width:700px){
-  .polaroid{width:205px}
-  .polaroid .ph{height:170px}
-}
-
-/* joyful extras */
-.headliner span{display:inline-block;animation:dance 1.7s ease-in-out infinite,hueShift 6s linear infinite;
-  background:linear-gradient(90deg,#FFDF9E,#FF6FD8,#B388FF,#8FE3FF,#7CF2C3,#FFDF9E);background-size:400% 100%;
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-@keyframes hueShift{to{background-position:400% 0}}
-@keyframes dance{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-10px) rotate(-3deg)}75%{transform:translateY(4px) rotate(3deg)}}
-.balloon{position:fixed;width:48px;height:60px;border-radius:50%/46% 46% 54% 54%;cursor:pointer;z-index:4;
-  animation:floatUp linear forwards;box-shadow:inset -9px -9px 0 rgba(0,0,0,.14)}
-.balloon::after{content:'';position:absolute;bottom:-34px;left:50%;width:2px;height:34px;background:rgba(251,247,255,.4)}
-@keyframes floatUp{from{transform:translateY(110vh) rotate(-5deg)}to{transform:translateY(-25vh) rotate(5deg)}}
-.balloon.popped{animation:popB .25s ease-out forwards}
-@keyframes popB{50%{transform:scale(1.5);opacity:.8}100%{transform:scale(0);opacity:0}}
-.rain-item{cursor:pointer}
-.rain-item.wiggle{animation:wig .5s ease}
-@keyframes wig{25%{transform:translateY(0) rotate(calc(var(--rot) + 7deg)) scale(1.07)}75%{transform:translateY(0) rotate(calc(var(--rot) - 7deg)) scale(1.07)}}
+#finale .hint{font-size:.88rem;opacity:.7;font-weight:600;margin-top:12px}
 .emoji-row{font-size:2.1rem;margin-top:20px;display:flex;gap:12px;justify-content:center}
 .emoji-row span{display:inline-block;animation:party 1s ease-in-out infinite}
 .emoji-row span:nth-child(2n){animation-delay:.25s}
 .emoji-row span:nth-child(3n){animation-delay:.45s}
 @keyframes party{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-14px) rotate(10deg)}}
-.cake-wrap.squish{animation:squish .45s ease}
-@keyframes squish{50%{transform:scale(1.07,.93)}}
+
+/* ═══ UI ═══ */
+#soundToggle{position:fixed;top:50px;right:12px;z-index:41;background:rgba(251,247,255,.1);border:1px solid rgba(179,136,255,.35);
+  border-radius:50%;width:44px;height:44px;font-size:1.1rem;cursor:pointer;color:#fff;backdrop-filter:blur(6px)}
+#ytBox{display:none;position:fixed;bottom:14px;left:14px;z-index:40;border-radius:14px;overflow:hidden;
+  box-shadow:0 12px 34px rgba(0,0,0,.55);border:1px solid rgba(179,136,255,.45);background:#000}
+#ytBox .yt-label{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;color:var(--gold);
+  background:rgba(14,10,36,.9);padding:5px 10px;text-transform:uppercase}
+#ytBox iframe{display:block;width:min(300px,74vw);height:169px;border:0}
+#ytClose{position:absolute;top:3px;right:6px;z-index:2;cursor:pointer;color:#fff;font-size:.8rem;padding:2px 4px}
+#ytMin{position:absolute;top:3px;right:30px;z-index:2;cursor:pointer;color:#fff;font-size:.8rem;padding:2px 4px}
+#ytBox.mini iframe{height:0}
+canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001s !important;transition-duration:.2s !important}
-  .beam{display:none}
+  .cloudy{display:none}
 }
 </style>
 </head>
 <body>
 
-<div class="beam l"></div><div class="beam r"></div><div class="beam c"></div>
-<div class="blob" style="width:44vw;height:44vw;left:-12vw;top:16vh;background:#FF6FD8;animation-duration:11s"></div>
-<div class="blob" style="width:38vw;height:38vw;right:-10vw;top:44vh;background:#7CF2C3;animation-duration:14s"></div>
-<div class="blob" style="width:40vw;height:40vw;left:6vw;bottom:-14vh;background:#8FE3FF;animation-duration:12s"></div>
-<div class="blob" style="width:30vw;height:30vw;right:12vw;top:4vh;background:#FF9D6F;animation-duration:16s"></div>
-<canvas id="fx"></canvas>
-<button id="soundToggle" aria-label="toggle sound">🔊</button>
-<div id="ytBox"><span id="ytClose">✕</span><iframe id="ytFrame" title="our song" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+<!-- scenery -->
+<div id="horizonGlow"></div>
+<div id="moon"></div>
+<div id="island"><svg viewBox="0 0 1000 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <path d="M0,260 L0,205 Q140,158 310,192 Q430,216 540,202 Q720,178 1000,212 L1000,260 Z" fill="#0B0720"/>
+  <g stroke="#0B0720" fill="none" stroke-linecap="round">
+    <path d="M185,196 q7,-42 2,-72" stroke-width="8"/>
+    <path d="M187,124 q-32,-16 -58,-6" stroke-width="6"/>
+    <path d="M187,124 q32,-16 58,-6" stroke-width="6"/>
+    <path d="M187,124 q-16,-30 -34,-40" stroke-width="6"/>
+    <path d="M187,124 q16,-30 34,-40" stroke-width="6"/>
+    <path d="M420,206 q-6,-36 -1,-62" stroke-width="7"/>
+    <path d="M419,144 q-28,-14 -50,-5" stroke-width="5"/>
+    <path d="M419,144 q28,-14 50,-5" stroke-width="5"/>
+    <path d="M419,144 q-13,-26 -28,-35" stroke-width="5"/>
+    <path d="M419,144 q13,-26 28,-35" stroke-width="5"/>
+  </g>
+</svg></div>
+<div id="mtns"><svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <path d="M0,300 L0,190 L110,110 L210,185 L330,70 L470,200 L560,120 L690,210 L800,90 L910,190 L1000,150 L1000,300 Z" fill="#171033"/>
+  <path d="M0,300 L0,235 L150,175 L280,240 L420,150 L540,245 L700,170 L850,250 L1000,205 L1000,300 Z" fill="#0B0720"/>
+  <g fill="#F5C86B">
+    <circle class="citylight" cx="380" cy="268" r="2.2"/><circle class="citylight" cx="412" cy="276" r="1.8" style="animation-delay:.4s"/>
+    <circle class="citylight" cx="446" cy="270" r="2.4" style="animation-delay:.9s"/><circle class="citylight" cx="478" cy="279" r="1.7" style="animation-delay:.2s"/>
+    <circle class="citylight" cx="508" cy="272" r="2.1" style="animation-delay:1.2s"/><circle class="citylight" cx="540" cy="280" r="1.8" style="animation-delay:.6s"/>
+    <circle class="citylight" cx="575" cy="273" r="2.3" style="animation-delay:1.5s"/><circle class="citylight" cx="607" cy="281" r="1.6" style="animation-delay:.3s"/>
+  </g>
+</svg></div>
 
-<!-- HERO -->
+<div id="bunting"><svg viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true">
+  <line x1="0" y1="7" x2="1200" y2="7" stroke="rgba(251,247,255,.4)" stroke-width="2"/>
+  <polygon points="26,7 54,7 40,36" fill="#FF8FC8"/><polygon points="112,7 140,7 126,36" fill="#F5C86B"/>
+  <polygon points="198,7 226,7 212,36" fill="#8FE3FF"/><polygon points="284,7 312,7 298,36" fill="#B388FF"/>
+  <polygon points="370,7 398,7 384,36" fill="#7CF2C3"/><polygon points="456,7 484,7 470,36" fill="#FF8FC8"/>
+  <polygon points="542,7 570,7 556,36" fill="#F5C86B"/><polygon points="628,7 656,7 642,36" fill="#8FE3FF"/>
+  <polygon points="714,7 742,7 728,36" fill="#B388FF"/><polygon points="800,7 828,7 814,36" fill="#7CF2C3"/>
+  <polygon points="886,7 914,7 900,36" fill="#FF8FC8"/><polygon points="972,7 1000,7 986,36" fill="#F5C86B"/>
+  <polygon points="1058,7 1086,7 1072,36" fill="#8FE3FF"/><polygon points="1144,7 1172,7 1158,36" fill="#B388FF"/>
+</svg></div>
+
+<!-- flight hud -->
+<div id="hud">
+  <div class="route"><span>MRU</span><div class="track"><div id="planeIcon">✈️</div></div><span>GNB</span></div>
+  <div id="kmText">0 km of 8,952</div>
+</div>
+<button id="soundToggle" aria-label="toggle sound">🔊</button>
+<div id="ytBox"><div class="yt-label">in flight entertainment 🎧<span id="ytMin">➖</span><span id="ytClose">✕</span></div><iframe id="ytFrame" title="our song" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+<canvas id="fx"></canvas>
+
+<!-- 1 · BOARDING -->
 <section id="hero">
-  <div class="marquee">
-    <div class="bulbs"></div>
-    <div class="eyebrow">one night only · live from grenoble</div>
-    <div class="headliner bebas">NELLY</div>
-    <div class="tourline bebas">the 20th birthday tour</div>
-    <div class="smallline">For the sixth consecutive year</div>
+  <div class="eyebrow">now boarding · birthday airlines</div>
+  <h1 class="script" style="font-size:clamp(2.6rem,9.5vw,4.2rem)">happy birthday, Nelly</h1>
+  <div class="party-line">🎈🎂🎁🎈</div>
+  <div class="line" style="margin-top:10px">i can't be there in person today 🥺<br>so here's your ticket to every memory we've made 🎫💜</div>
+  <div class="pass" id="pass" role="button" tabindex="0" aria-label="tap to stamp your boarding pass">
+    <div class="p-head mono"><span>MEMORY AIRLINES 💜</span><span>FLIGHT N20</span></div>
+    <div class="p-route">
+      <div><div class="code bebas">MRU</div><div class="lbl mono">mauritius</div></div>
+      <div class="p-plane">✈️</div>
+      <div style="text-align:right"><div class="code bebas">GNB</div><div class="lbl mono">grenoble</div></div>
+    </div>
+    <div class="p-grid">
+      <div><b>passenger</b>nelly, the birthday girl</div>
+      <div><b>seat</b>20A, obviously</div>
+      <div><b>destination</b>our best memories</div>
+      <div><b>baggage</b>8,952 km of love</div>
+      <div><b>age on file</b>20 (final answer)</div>
+      <div><b>arrival</b>your heart, right on time</div>
+    </div>
+    <div class="barcode"></div>
+    <div class="stamp" id="stamp">CLEARED FOR LOVE ✓</div>
   </div>
-  <div class="smallline" id="musicHint" style="margin-top:22px">tap anywhere for music 🎻 then scroll babyyy💜</div>
+  <div class="tap-hint" id="tapHint">tap your boarding pass to check in 🎫</div>
+  <div class="tap-hint" id="musicHint">tap anywhere for music 🎻 then scroll babyyy💜</div>
   <div class="scrolldown">⌄</div>
 </section>
 
-<!-- RAIN INTRO -->
-<section style="min-height:60svh" class="slide">
-  <div class="eyebrow rise">now, look up</div>
-  <div class="line rise d1">it's raining little pieces of us ☔💜<br><span style="font-size:.8em;opacity:.75">scroll slowly, catch them all</span></div>
-</section>
-
-<!-- MEMORY RAIN (items are placed by the script) -->
-<section id="rainSec"></section>
-
-<!-- BIG PHOTO -->
+<!-- 2 · TAKEOFF -->
 <section class="slide">
-  <div class="eyebrow rise">and my favorite view of all</div>
-  <figure class="bigframe rise d1"><div class="ph" id="bigPh">💜</div><figcaption class="script" id="bigCap">you. always you.</figcaption></figure>
+  <div class="eyebrow rise">wheels up</div>
+  <div class="line rise d1">doors closed. engines on. 🛫<br>tonight i'm flying you everything<br>i couldn't hand you in person.<br><span class="small">(look down… that's home getting smaller)</span></div>
 </section>
 
-<!-- DISTANCE -->
+<!-- 3 · MEMORY SKY intro -->
+<section class="slide" style="min-height:70svh">
+  <div class="eyebrow rise">cruising altitude</div>
+  <div class="line rise d1">look out the window 🪟<br><b>it's raining memories up here</b><br><span class="small">scroll slowly, catch them all</span></div>
+</section>
+
+<!-- 4 · MEMORY SKY (filled by script) -->
+<section id="memSky"></section>
+
+<!-- 5 · HALFWAY MOON -->
 <section class="slide">
-  <div class="eyebrow rise">the hard part</div>
-  <div class="line rise d1">now <b>8,952 km</b> sit between us.<br>mauritius to grenoble.<br>planes. timezones. missed calls.<br><span style="font-size:.78em;opacity:.75">(yes, i measured. every single one hurts.)</span></div>
-  <div class="line rise d2" style="margin-top:34px"><b>and yet. same moon. same us.</b><br>you have never once felt far 🌙</div>
+  <div class="eyebrow rise">4,476 km · exactly halfway</div>
+  <div class="line rise d1"><b>same moon. same us.</b> 🌙<br>it watches me in mauritius,<br>then checks on you in grenoble.</div>
+  <figure class="bigframe rise d2"><div class="ph" id="bigPh">💜</div><figcaption class="script" id="bigCap">you. always you.</figcaption></figure>
 </section>
 
-<!-- LETTER -->
+<!-- 6 · THE HARD PART -->
+<section class="slide">
+  <div class="eyebrow rise">cabin announcement</div>
+  <div class="line rise d1">light turbulence ahead:<br>planes. timezones. missed calls.<br><span class="small">(yes, i measured: 8,952 km. every single one hurts.)</span></div>
+  <div class="line rise d2" style="margin-top:30px">but here's the thing…<br><b>you have never once felt far.</b></div>
+</section>
+
+<!-- 7 · DESCENT -->
+<section class="slide">
+  <div class="eyebrow rise">beginning descent</div>
+  <div class="line rise d1">the alps outside the window ❄<br>grenoble glowing below.<br>somewhere down there, the prettiest girl in france<br>is turning <span class="pk"><b>20</b></span> again 😌</div>
+  <div class="line rise d2 script" style="margin-top:26px;color:var(--gold);font-size:clamp(1.6rem,6vw,2.2rem)">this feels like somewhere only we know 🎵</div>
+</section>
+
+<!-- 8 · LETTER -->
 <section class="slide" id="letterSec">
-  <div class="eyebrow rise">a letter for you</div>
+  <div class="eyebrow rise">delivered by hand, almost</div>
   <div class="letter rise d1"><div id="letterText"></div><span class="cursor" id="cur"></span></div>
 </section>
 
-<!-- CAKE -->
+<!-- 9 · CAKE -->
 <section class="slide" id="cakeSec">
-  <div class="eyebrow rise">last thing, birthday girl</div>
-  <div class="line rise d1">25 candles would set off the fire alarm 🚒<br>so here are <b>5</b>, one for every year you've been 20.</div>
+  <div class="eyebrow rise">we have landed 🛬</div>
+  <div class="line rise d1">time for cake.<br>25 candles would set off the smoke alarm 🚒<br>so here are <b>5</b>, one for every year you've been 20.</div>
   <div class="cake-wrap rise d2">
     <div class="candles" id="candles"></div>
-    <div class="tier top"><div class="drip">🍓 🌈 🍓</div></div>
+    <div class="tier top"><div class="drip">🍓 ✨ 🍓</div></div>
     <div class="tier bottom"><div class="drip">💜 💛 💚 💙</div></div>
     <div class="plate"></div>
   </div>
@@ -290,25 +364,24 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
   <div class="bebas">HAPPY <span class="strike">25TH</span> <span class="twenty">20TH</span><br>BIRTHDAY NELLY</div>
   <div class="script">forever and always 💜</div>
   <div class="emoji-row"><span>🎉</span><span>💃</span><span>🥳</span><span>🎂</span><span>🎊</span></div>
-  <div class="hint" style="margin-top:14px">sent with love, from mauritius to grenoble 🌍</div>
-  <div class="hint">tap the screen for more fireworks 🎆</div>
+  <div class="hint mono" style="margin-top:16px">flight complete · 8,952 km of love delivered · mru → gnb 🌍</div>
   <a class="btn" id="playlistBtn" target="_blank" rel="noopener" style="display:none">your birthday playlist 🎧</a>
   <div class="hint" id="playlistHint" style="display:none">p.s. read the first letter of every song 👀</div>
+  <div class="hint">tap the screen for more fireworks 🎆</div>
 </div>
 
 <script>
 /* ══ EDIT ZONE ══════════════════════════════════════════════════ */
-const playlistUrl = ""; // paste your playlist link here and a button appears at the finale
+const playlistUrl = ""; // your acrostic playlist link, button appears at the finale
 
-/* HER SONG: paste a YouTube video ID here, the part after v= in the link.
-   example: for youtube.com/watch?v=abc123xyz the ID is "abc123xyz".
-   search youtube for "invisible string instrumental", pick one, copy its ID.
-   a mini player appears bottom left and replaces the built in melody.
-   leave empty to keep the music box tune. */
-const SONG_YOUTUBE_ID = "CzVNX_fErcE&list=RDCzVNX_fErcE&start_radio=1";
+/* youtube ID of the song, the part after v= in the link.
+   search "invisible string instrumental", copy its ID.
+   leave empty to keep the built in music box melody. */
+const SONG_YOUTUBE_ID = "";
 
-/* your photos. add a link inside img:"" to show a real photo,
-   leave it empty and the emoji card shows instead. */
+/* your photos floating in the memory sky.
+   put img:"photo1.jpg" if the photo is uploaded to your repo,
+   or a full https link. empty img keeps the emoji card. */
 const PHOTOS = [
   {img:"", emoji:"🎀", caption:"a legend was born"},
   {img:"", emoji:"📚", caption:"the smart one"},
@@ -320,11 +393,10 @@ const PHOTOS = [
   {img:"", emoji:"💜", caption:"my favorite person"}
 ];
 
-/* the one BIG photo shown right before the distance part.
-   put a link in img:"" the same way as above. */
+/* the one BIG photo at the halfway point, your favorite picture of her */
 const BIG_PHOTO = {img:"", emoji:"💜", caption:"you. always you."};
 
-/* the cute texts raining between the photos. edit freely. */
+/* the little messages floating in the sky between photos */
 const TEXTS = [
   'born exactly "20" ±5 years ago 🎀',
   'still 20 btw',
@@ -359,13 +431,30 @@ yours, forever and always 💜`;
 /* ══ END OF EDIT ZONE ═══════════════════════════════════════════ */
 
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TOTAL_KM=8952;
 
-/* sparkles */
-const SPC=['#FFDF9E','#FF6FD8','#7CF2C3','#8FE3FF','#B388FF'];
-for(let i=0;i<30;i++){
-  const s=document.createElement('div');s.className='sp';s.textContent='✦';
-  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3.2}s;color:${SPC[i%SPC.length]}`;
+/* ── stars & clouds ── */
+const CONF=['#FF8FC8','#F5C86B','#8FE3FF','#B388FF','#7CF2C3'];
+for(let i=0;i<70;i++){
+  const s=document.createElement('div');
+  if(i%2){
+    s.className='star';
+    const z=(Math.random()*2.2+1).toFixed(1);
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;animation-delay:${(Math.random()*3.6).toFixed(1)}s`;
+  }else{
+    s.className='confp';
+    const z=(Math.random()*4+4).toFixed(0);
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${(z*.45).toFixed(0)}px;background:${CONF[i%CONF.length]};transform:rotate(${(Math.random()*90-45).toFixed(0)}deg);animation-delay:${(Math.random()*3.6).toFixed(1)}s;opacity:.5`;
+  }
   document.body.appendChild(s);
+}
+if(!reduceMotion){
+  for(let i=0;i<4;i++){
+    const c=document.createElement('div');c.className='cloudy';
+    const w=160+Math.random()*220;
+    c.style.cssText=`width:${w}px;height:${w*.36}px;top:${10+Math.random()*60}%;animation-duration:${70+Math.random()*70}s;animation-delay:-${Math.random()*80}s`;
+    document.body.appendChild(c);
+  }
 }
 
 /* ── audio engine ── */
@@ -381,10 +470,9 @@ function tone(f,t,d,type='sine',v=.12){
 }
 const chime=(f=1046)=>{ensureAC();tone(f,AC.currentTime,.8,'sine',.13);tone(f*1.5,AC.currentTime+.05,.6,'sine',.05);};
 
-/* Canon in D, gentle music box loop (public domain) */
-const F={D3:146.83,E3:164.81,Fs3:185.00,G3:196.00,A3:220.00,B3:246.94,Cs4:277.18,
-        D4:293.66,E4:329.63,Fs4:369.99,G4:392.00,A4:440.00,B4:493.88,Cs5:554.37,
-        D5:587.33,E5:659.25,Fs5:739.99,G5:783.99,A5:880.00};
+/* Canon in D music box (public domain) */
+const F={D3:146.83,Fs3:185.00,G3:196.00,A3:220.00,B3:246.94,Cs4:277.18,D4:293.66,
+        E4:329.63,Fs4:369.99,A4:440.00,B4:493.88,Cs5:554.37,D5:587.33,E5:659.25,Fs5:739.99};
 const CANON=[
   [F.D3,F.Fs4,F.A4,F.Fs5],[F.A3,F.Cs4,F.E4,F.E5],
   [F.B3,F.D4,F.Fs4,F.D5],[F.Fs3,F.A3,F.Cs4,F.Cs5],
@@ -434,16 +522,16 @@ const pop=()=>{if(muted||!AC)return;const t=AC.currentTime;
 
 document.getElementById('soundToggle').onclick=e=>{
   muted=!muted;e.target.textContent=muted?'🔇':'🔊';
-  if(muted)stopAmbient();else{startAmbient();}
+  if(muted)stopAmbient();else startAmbient();
   e.stopPropagation();
 };
 document.body.addEventListener('pointerdown',function once(){startAmbient();},{once:true});
 
-/* ── fireworks + heart confetti canvas ── */
+/* ── fireworks + heart confetti ── */
 const cvs=document.getElementById('fx'),ctx=cvs.getContext('2d');
 let parts=[],rockets=[],rain=false,launching=false;
 const resize=()=>{cvs.width=innerWidth;cvs.height=innerHeight};resize();addEventListener('resize',resize);
-const CLR=['#F5C86B','#B388FF','#FF6FD8','#FFDF9E','#FFFFFF','#8FE3FF','#7CF2C3','#FF9D6F'];
+const CLR=['#F5C86B','#B388FF','#FF8FC8','#FFDF9E','#FFFFFF','#8FE3FF','#7CF2C3'];
 function drawHeart(x,y,s,r){ctx.save();ctx.translate(x,y);ctx.rotate(r);ctx.scale(s/14,s/14);
   ctx.beginPath();ctx.moveTo(0,4);ctx.bezierCurveTo(-7,-4,-14,2,0,12);ctx.bezierCurveTo(14,2,7,-4,0,4);ctx.fill();ctx.restore();}
 function burst(x,y,n=40,color){
@@ -482,14 +570,34 @@ function launchRocket(){
   ctx.globalAlpha=1;
 })();
 
-/* ── build the memory rain (random order + random positions) ── */
-const rainSec=document.getElementById('rainSec');
+/* light sparkles wherever she taps */
+document.addEventListener('pointerdown',e=>{
+  if(e.target.closest('button,a,.candle,iframe'))return;
+  burst(e.clientX,e.clientY,6);
+});
+
+/* ── boarding pass stamp ── */
+const pass=document.getElementById('pass');
+let stamped=false;
+const stampIt=()=>{
+  if(stamped)return;stamped=true;
+  ensureAC();document.getElementById('stamp').classList.add('on');
+  chime(1318);
+  const r=pass.getBoundingClientRect();
+  burst(r.left+r.width/2,r.top+r.height/2,50);
+  document.getElementById('tapHint').textContent='welcome aboard, birthday girl 💜';
+};
+pass.onclick=stampIt;
+pass.onkeydown=e=>{if(e.key==='Enter'||e.key===' ')stampIt();};
+
+/* ── memory sky ── */
+const memSky=document.getElementById('memSky');
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
 const items=shuffle([
   ...PHOTOS.map(p=>({kind:'photo',...p})),
   ...TEXTS.map((t,i)=>({kind:i%2?'pill':'tscript',text:t}))
 ]);
-const JPAT=[0,2,1,2,0,1]; /* left, right, center, right, left, center… */
+const JPAT=[0,2,1,2,0,1];
 items.forEach((it,i)=>{
   const row=document.createElement('div');
   row.className='rain-row j'+JPAT[i%JPAT.length];
@@ -497,12 +605,13 @@ items.forEach((it,i)=>{
   el.className='rain-item';
   el.style.setProperty('--rot',(Math.random()*14-7).toFixed(1)+'deg');
   if(it.kind==='photo'){
-    el.innerHTML=`<figure class="polaroid"><div class="ph g${i%5}">${it.img?`<img src="${it.img}" alt="${it.caption}">`:it.emoji}</div><figcaption>${it.caption}</figcaption></figure>`;
+    el.innerHTML=`<figure class="polaroid"><div class="ph g${i%3}">${it.img?`<img src="${it.img}" alt="${it.caption}">`:it.emoji}</div><figcaption>${it.caption}</figcaption></figure>`;
   }else{
-    el.innerHTML=it.kind==='pill'?`<span class="pill p${i%4}">${it.text}</span>`:`<span class="tscript c${i%4}">${it.text}</span>`;
+    const alt=i%2?' alt':'';
+    el.innerHTML=it.kind==='pill'?`<span class="pill${alt}">${it.text}</span>`:`<span class="tscript${alt}">${it.text}</span>`;
   }
   row.appendChild(el);
-  rainSec.appendChild(row);
+  memSky.appendChild(row);
 });
 
 /* big photo */
@@ -516,9 +625,37 @@ if(SONG_YOUTUBE_ID){
   const box=document.getElementById('ytBox');
   box.style.display='block';
   document.getElementById('ytFrame').src=`https://www.youtube.com/embed/${SONG_YOUTUBE_ID}?loop=1&playlist=${SONG_YOUTUBE_ID}`;
-  document.getElementById('musicHint').textContent='press play on our song 🎶 then scroll babyyy💜';
+  document.getElementById('musicHint').textContent='press play on our song 🎶 tap ➖ to tuck it away, then scroll babyyy💜';
   document.getElementById('ytClose').onclick=()=>{document.getElementById('ytFrame').src='';box.remove();};
+  const ymin=document.getElementById('ytMin');
+  ymin.onclick=()=>{const mini=box.classList.toggle('mini');ymin.textContent=mini?'🎵':'➖';};
 }
+
+/* ── flight progress engine ── */
+const kmText=document.getElementById('kmText'),planeIcon=document.getElementById('planeIcon');
+const island=document.getElementById('island'),glow=document.getElementById('horizonGlow'),
+      moon=document.getElementById('moon'),mtns=document.getElementById('mtns'),
+      letterSec=document.getElementById('letterSec');
+let landed=false;
+function onScroll(){
+  const end=Math.max(1,letterSec.offsetTop-innerHeight*.55);
+  const p=Math.min(1,Math.max(0,scrollY/end));
+  const km=Math.round(p*TOTAL_KM);
+  if(p>=1){
+    if(!landed){landed=true;kmText.textContent='landed in grenoble 🛬💜';}
+  }else{
+    landed=false;
+    kmText.textContent=km.toLocaleString('en')+' km of '+TOTAL_KM.toLocaleString('en');
+  }
+  planeIcon.style.left=(p*100).toFixed(1)+'%';
+  island.style.opacity=Math.max(0,1-p*4).toFixed(2);
+  glow.style.opacity=Math.max(0,1-p*3.4).toFixed(2);
+  moon.style.opacity=Math.max(0,1-Math.abs(p-.45)*5).toFixed(2);
+  mtns.style.opacity=Math.min(1,Math.max(0,(p-.6)*3.5)).toFixed(2);
+}
+addEventListener('scroll',()=>requestAnimationFrame(onScroll),{passive:true});
+addEventListener('resize',()=>requestAnimationFrame(onScroll));
+onScroll();
 
 /* ── scroll reveals ── */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
@@ -531,7 +668,7 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{
     }
   }
 }),{threshold:.25});
-document.querySelectorAll('.slide,.rain-item').forEach(el=>io.observe(el));
+document.querySelectorAll('.slide,.rain-item,#hero').forEach(el=>io.observe(el));
 
 /* ── typed letter ── */
 let typed=false;
@@ -563,8 +700,8 @@ for(let i=0;i<5;i++){
     ensureAC();c.classList.add('out');pop();
     const s=document.createElement('div');s.className='smoke';s.textContent='💨';c.appendChild(s);
     lit--;
-    const msg=document.getElementById('wishMsg');
     const cheers=['woohoo! 💨','what a blow! 🌬️','the flames fear you 🔥','legendary lungs ✨'];
+    const msg=document.getElementById('wishMsg');
     msg.textContent=lit>0?`${cheers[Math.random()*cheers.length|0]} ${lit} more to go`:'✨ make a wish ✨';
     if(lit===0){
       chime(1318);stopMic();
@@ -575,7 +712,7 @@ for(let i=0;i<5;i++){
   c.onclick=blow;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' ')blow();};
   candlesEl.appendChild(c);
 }
-function blowNext(){const f=blowFns.find((fn,i)=>!candlesEl.children[i].classList.contains('out'));if(f)f();}
+function blowNext(){const idx=[...candlesEl.children].findIndex(el=>!el.classList.contains('out'));if(idx>=0)blowFns[idx]();}
 
 /* ── microphone blow detection ── */
 let micOn=false,micStream=null,analyser=null,micData=null,lastBlow=0;
@@ -593,7 +730,7 @@ document.getElementById('micBtn').onclick=async function(){
     micStatus.textContent='mic is on! now blow like it\u2019s a real cake 🌬️🎂';
     micLoop();
   }catch(err){
-    micStatus.textContent='no mic access here, tap the flames instead 🔥 (mic works when opened as a link)';
+    micStatus.textContent='no mic access here, tap the flames instead 🔥';
   }
 };
 function micLoop(){
@@ -612,55 +749,7 @@ function stopMic(){
   if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;}
 }
 
-/* ── joyful extras ── */
-function boing(){if(muted||!AC)return;const t=AC.currentTime;
-  const o=AC.createOscillator(),g=AC.createGain();
-  o.type='sine';o.frequency.setValueAtTime(280,t);o.frequency.exponentialRampToValueAtTime(880,t+.14);
-  g.gain.setValueAtTime(.18,t);g.gain.exponentialRampToValueAtTime(.001,t+.2);
-  o.connect(g).connect(AC.destination);o.start(t);o.stop(t+.22);}
-
-/* dancing headliner letters, tap for confetti */
-const hl=document.querySelector('.headliner');
-hl.innerHTML=[...hl.textContent].map((ch,i)=>`<span style="animation-delay:${(i*.13).toFixed(2)}s">${ch}</span>`).join('');
-hl.style.cursor='pointer';
-hl.addEventListener('click',e=>{chime(1318);burst(e.clientX,e.clientY,32);});
-
-/* floating balloons, pop them! */
-function spawnBalloon(){
-  if(reduceMotion)return;
-  const b=document.createElement('div');b.className='balloon';
-  b.style.background=CLR[Math.random()*4|0];
-  b.style.left=(4+Math.random()*88)+'vw';
-  b.style.animationDuration=(10+Math.random()*8)+'s';
-  b.onclick=e=>{b.classList.add('popped');boing();burst(e.clientX,e.clientY,18);setTimeout(()=>b.remove(),260)};
-  document.body.appendChild(b);
-  setTimeout(()=>b.remove(),19000);
-}
-setInterval(spawnBalloon,3000);
-
-/* sparkles wherever she taps */
-document.addEventListener('pointerdown',e=>{
-  if(e.target.closest('button,a,.candle,.balloon,.rain-item'))return;
-  burst(e.clientX,e.clientY,6);
-});
-
-/* wiggle the raining memories on tap */
-document.querySelectorAll('.rain-item').forEach(el=>{
-  el.addEventListener('click',e=>{
-    el.classList.remove('wiggle');void el.offsetWidth;el.classList.add('wiggle');
-    boing();burst(e.clientX,e.clientY,12);
-  });
-});
-
-/* squishy cake */
-const cw=document.querySelector('.cake-wrap');
-cw.addEventListener('click',e=>{
-  if(e.target.closest('.candle'))return;
-  cw.classList.remove('squish');void cw.offsetWidth;cw.classList.add('squish');
-  pop();burst(e.clientX,e.clientY,14);
-});
-
-/* ── finale: fireworks ── */
+/* ── finale ── */
 function finale(){
   stopAmbient();
   document.getElementById('finale').classList.add('on');
@@ -673,7 +762,7 @@ function finale(){
   }
   let f=0;const fw=setInterval(()=>{launchRocket();if(++f>10)clearInterval(fw);},500);
   document.getElementById('finale').addEventListener('click',()=>{launchRocket();launchRocket();});
-  setTimeout(()=>{if(!muted){ambientOn=true;canonCycle();}},9500);
+  setTimeout(()=>{if(!muted&&!SONG_YOUTUBE_ID){ambientOn=true;canonCycle();}},9500);
 }
 </script>
 </body>
