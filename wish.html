@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>flight N20 · MRU → GNB 💜</title>
+<title>NELLY · Happy Birthday my love💜</title>
 <!-- ══════════════════════════════════════════════════════════════
      NELLY'S BIRTHDAY FLIGHT · works as is, nothing required.
      the edit zone is at the top of the script below:
@@ -277,9 +277,9 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 <!-- 1 · BOARDING -->
 <section id="hero">
   <div class="eyebrow">now boarding · birthday airlines</div>
-  <h1 class="script" style="font-size:clamp(2.6rem,9.5vw,4.2rem)">happy birthday, Nelly</h1>
-  <div class="party-line">🎈🎂🎁🎈</div>
-  <div class="line" style="margin-top:10px">i can't be there in person today 🥺<br>so here's your ticket to every memory we've made 🎫💜</div>
+  <h1 class="script" style="font-size:clamp(2.6rem,9.5vw,4.2rem)">happy birthday, Amour de toutes mes viesss</h1>
+  <div class="party-line">🎂</div>
+  <div class="line" style="margin-top:10px">i can't be there in person today 🥺<br>so here's your ticket to every memory we've made 💜</div>
   <div class="pass" id="pass" role="button" tabindex="0" aria-label="tap to stamp your boarding pass">
     <div class="p-head mono"><span>MEMORY AIRLINES 💜</span><span>FLIGHT N20</span></div>
     <div class="p-route">
@@ -289,17 +289,17 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
     </div>
     <div class="p-grid">
       <div><b>passenger</b>nelly, the birthday girl</div>
-      <div><b>seat</b>20A, obviously</div>
+      <div><b>seat</b>20N</div>
       <div><b>destination</b>our best memories</div>
       <div><b>baggage</b>8,952 km of love</div>
-      <div><b>age on file</b>20 (final answer)</div>
+      <div><b>age on file</b>20 -+5 😬</div>
       <div><b>arrival</b>your heart, right on time</div>
     </div>
     <div class="barcode"></div>
     <div class="stamp" id="stamp">CLEARED FOR LOVE ✓</div>
   </div>
-  <div class="tap-hint" id="tapHint">tap your boarding pass to check in 🎫</div>
-  <div class="tap-hint" id="musicHint">tap anywhere for music 🎻 then scroll babyyy💜</div>
+  <div class="tap-hint" id="tapHint">tap your boarding pass to check in</div>
+  <div class="tap-hint" id="musicHint">tap anywhere for music then scroll babyyy💜</div>
   <div class="scrolldown">⌄</div>
 </section>
 
@@ -312,7 +312,7 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 <!-- 3 · MEMORY SKY intro -->
 <section class="slide" style="min-height:48svh">
   <div class="eyebrow rise">cruising altitude</div>
-  <div class="line rise d1">look out the window 🪟<br><b>it's raining memories up here</b><br><span class="small">scroll slowly, catch them all</span></div>
+  <div class="line rise d1">look out the window<br><b>it's raining memories up here</b><br><span class="small">scroll slowly, catch them all</span></div>
 </section>
 
 <!-- 4 · MEMORY SKY (filled by script) -->
@@ -378,37 +378,40 @@ const playlistUrl = ""; // your acrostic playlist link, button appears at the fi
 /* youtube ID of the song, the part after v= in the link.
    search "invisible string instrumental", copy its ID.
    leave empty to keep the built in music box melody. */
-const SONG_YOUTUBE_ID = "";
+const SONG_YOUTUBE_ID = "CzVNX_fErcE&list=RDCzVNX_fErcE&start_radio=1";
 
 /* your photos floating in the memory sky.
    put img:"photo1.jpg" if the photo is uploaded to your repo,
    or a full https link. empty img keeps the emoji card. */
 const PHOTOS = [
-  {img:"", emoji:"🎀", caption:"a legend was born"},
-  {img:"", emoji:"📚", caption:"the smart one"},
-  {img:"", emoji:"😂", caption:"the funny one"},
-  {img:"", emoji:"🥰", caption:"the day it all started"},
-  {img:"", emoji:"📞", caption:"our 3am calls"},
-  {img:"", emoji:"✈️", caption:"airport tears, again"},
-  {img:"", emoji:"🌙", caption:"same moon, both of us"},
-  {img:"", emoji:"💜", caption:"my favorite person"}
+  {img:"img13.jpg", emoji:"🎀", caption:"a legend was born"},
+  {img:"img2.jpg", emoji:"📚", caption:"That's smile"},
+  {img:"img3.jpg", emoji:"😂", caption:"Our favourite colours"},
+  {img:"img4.jpg", emoji:"🥰", caption:"lamain dans lamain pour toujoursss"},
+  {img:"img5.jpg", emoji:"📞", caption:"i miss you so much trouduccc"},
+  {img:"img6.jpg", emoji:"✈️", caption:"youre the cutest everr"},
+  {img:"img12.jpg", emoji:"🌙", caption:"MAde for each other"},
+  {img:"img14.jpg", emoji:"💜", caption:"my favorite person"}
 ];
 
 /* the one BIG photo at the halfway point, your favorite picture of her */
-const BIG_PHOTO = {img:"", emoji:"💜", caption:"you. always you."};
+const BIG_PHOTO = {img:"img1.jpg", emoji:"💜", caption:"you. always you."};
 
 /* the little messages floating in the sky between photos */
 const TEXTS = [
   'born exactly "20" ±5 years ago 🎀',
   'still 20 btw',
+'Me love you soo muchh',
   'unfairly beautiful',
   'the main character',
   'my best decision ever',
   'prettiest girl in grenoble',
   'miss you every single day',
   'you + me, always',
-  'my favorite notification 📱',
+  'my favorite notification',
+  'Bel mo fam doww',
   'forever and always 💜'
+     
 ];
 
 const letter =
