@@ -26,6 +26,7 @@
 :root{
   --stage:#120B26; --indigo:#1E1440; --violet:#5B3A9E; --lilac:#B388FF;
   --gold:#F5C86B; --gold-hot:#FFDF9E; --magenta:#FF6FD8; --white:#FBF7FF;
+  --mint:#7CF2C3; --sky:#8FE3FF; --coral:#FF9D6F;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
@@ -45,6 +46,7 @@ body{
 .beam.r{right:-6vw;background:linear-gradient(180deg,rgba(255,111,216,.4),rgba(255,111,216,0) 75%);animation:swayR 8s ease-in-out infinite alternate}
 @keyframes swayL{from{transform:rotate(-14deg)}to{transform:rotate(10deg)}}
 @keyframes swayR{from{transform:rotate(14deg)}to{transform:rotate(-10deg)}}
+.beam.c{left:34vw;width:24vw;opacity:.22;background:linear-gradient(180deg,rgba(124,242,195,.45),rgba(124,242,195,0) 75%);animation:swayL 9.5s ease-in-out infinite alternate-reverse}
 .sp{position:fixed;color:var(--gold-hot);z-index:0;animation:tw 3.2s ease-in-out infinite;pointer-events:none;font-size:10px}
 @keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}
 
@@ -79,7 +81,7 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
 
 /* memory rain */
-#rainSec{display:block;min-height:380svh;max-width:680px}
+#rainSec{display:block;min-height:380svh;max-width:900px;width:100%}
 .rain-item{position:absolute;opacity:0;transform:translateY(-110px) rotate(calc(var(--rot) - 12deg));
   transition:opacity .9s ease,transform .9s cubic-bezier(.2,1.4,.4,1)}
 .rain-item.show{opacity:1;transform:translateY(0) rotate(var(--rot))}
@@ -90,9 +92,30 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
 .polaroid .ph img{width:100%;height:100%;object-fit:cover}
 .polaroid figcaption{font-size:.82rem;font-weight:700;margin-top:9px}
 .pill{display:inline-block;background:rgba(18,11,38,.6);border:1px solid rgba(179,136,255,.4);backdrop-filter:blur(6px);
-  border-radius:999px;padding:12px 22px;font-weight:700;font-size:1rem;box-shadow:0 10px 30px rgba(0,0,0,.35);white-space:nowrap}
-.tscript{font-family:'Dancing Script',cursive;font-size:1.9rem;color:var(--gold);
-  text-shadow:0 0 20px rgba(245,200,107,.5);white-space:nowrap}
+  border-radius:999px;padding:12px 22px;font-weight:700;font-size:1rem;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:min(78vw,340px);white-space:normal;line-height:1.45}
+.tscript{font-family:'Dancing Script',cursive;font-size:clamp(1.5rem,4.6vw,2.1rem);color:var(--gold);
+  text-shadow:0 0 20px rgba(245,200,107,.5);white-space:normal;max-width:min(80vw,380px);display:inline-block;line-height:1.25}
+
+/* colour variants */
+.ph.g0{background:linear-gradient(135deg,var(--lilac),var(--magenta))}
+.ph.g1{background:linear-gradient(135deg,var(--magenta),var(--coral))}
+.ph.g2{background:linear-gradient(135deg,var(--sky),var(--lilac))}
+.ph.g3{background:linear-gradient(135deg,var(--mint),var(--sky))}
+.ph.g4{background:linear-gradient(135deg,var(--gold),var(--magenta))}
+.pill.p1{border-color:rgba(255,111,216,.55);color:#FFC9EC}
+.pill.p2{border-color:rgba(124,242,195,.5);color:#C9F7E4}
+.pill.p3{border-color:rgba(143,227,255,.5);color:#D8F3FF}
+.tscript.c1{color:var(--magenta);text-shadow:0 0 20px rgba(255,111,216,.5)}
+.tscript.c2{color:var(--mint);text-shadow:0 0 20px rgba(124,242,195,.5)}
+.tscript.c3{color:var(--sky);text-shadow:0 0 20px rgba(143,227,255,.5)}
+
+/* big photo frame */
+.bigframe{background:#FBF7FF;padding:14px 14px 18px;border-radius:10px;transform:rotate(-1.5deg);
+  width:min(460px,90vw);box-shadow:0 24px 70px rgba(0,0,0,.5),0 0 70px rgba(255,111,216,.25);margin-top:10px}
+.bigframe .ph{width:100%;height:min(440px,56svh);border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:6rem;background:linear-gradient(135deg,var(--magenta),var(--lilac),var(--sky));overflow:hidden}
+.bigframe .ph img{width:100%;height:100%;object-fit:cover}
+.bigframe figcaption{font-size:1.9rem;color:#2A1B4D;margin-top:12px}
 
 /* letter */
 .letter{background:rgba(251,247,255,.07);border:1px solid rgba(179,136,255,.3);backdrop-filter:blur(8px);
@@ -108,6 +131,7 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
 .candle{width:14px;height:60px;border-radius:6px;position:relative;cursor:pointer;
   background:repeating-linear-gradient(45deg,#FBF7FF,#FBF7FF 6px,var(--lilac) 6px,var(--lilac) 12px)}
 .candle:nth-child(2n){background:repeating-linear-gradient(45deg,#FBF7FF,#FBF7FF 6px,var(--magenta) 6px,var(--magenta) 12px)}
+.candle:nth-child(3n){background:repeating-linear-gradient(45deg,#FBF7FF,#FBF7FF 6px,var(--gold) 6px,var(--gold) 12px)}
 .flame{position:absolute;top:-25px;left:50%;transform:translateX(-50%);width:16px;height:25px;
   background:radial-gradient(circle at 50% 75%,#FFFDE0 0%,var(--gold) 45%,#FF9D3C 80%);
   border-radius:50% 50% 50% 50%/62% 62% 38% 38%;animation:flick .35s ease-in-out infinite alternate;
@@ -146,6 +170,31 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
   border-radius:50%;width:46px;height:46px;font-size:1.15rem;cursor:pointer;color:#fff;backdrop-filter:blur(6px)}
 canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 
+@media (min-width:700px){
+  .polaroid{width:205px}
+  .polaroid .ph{height:170px}
+}
+
+/* joyful extras */
+.headliner span{display:inline-block;animation:dance 1.7s ease-in-out infinite}
+@keyframes dance{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-10px) rotate(-3deg)}75%{transform:translateY(4px) rotate(3deg)}}
+.balloon{position:fixed;width:48px;height:60px;border-radius:50%/46% 46% 54% 54%;cursor:pointer;z-index:4;
+  animation:floatUp linear forwards;box-shadow:inset -9px -9px 0 rgba(0,0,0,.14)}
+.balloon::after{content:'';position:absolute;bottom:-34px;left:50%;width:2px;height:34px;background:rgba(251,247,255,.4)}
+@keyframes floatUp{from{transform:translateY(110vh) rotate(-5deg)}to{transform:translateY(-25vh) rotate(5deg)}}
+.balloon.popped{animation:popB .25s ease-out forwards}
+@keyframes popB{50%{transform:scale(1.5);opacity:.8}100%{transform:scale(0);opacity:0}}
+.rain-item{cursor:pointer}
+.rain-item.wiggle{animation:wig .5s ease}
+@keyframes wig{25%{transform:translateY(0) rotate(calc(var(--rot) + 7deg)) scale(1.07)}75%{transform:translateY(0) rotate(calc(var(--rot) - 7deg)) scale(1.07)}}
+.emoji-row{font-size:2.1rem;margin-top:20px;display:flex;gap:12px;justify-content:center}
+.emoji-row span{display:inline-block;animation:party 1s ease-in-out infinite}
+.emoji-row span:nth-child(2n){animation-delay:.25s}
+.emoji-row span:nth-child(3n){animation-delay:.45s}
+@keyframes party{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-14px) rotate(10deg)}}
+.cake-wrap.squish{animation:squish .45s ease}
+@keyframes squish{50%{transform:scale(1.07,.93)}}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001s !important;transition-duration:.2s !important}
   .beam{display:none}
@@ -154,7 +203,7 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 </head>
 <body>
 
-<div class="beam l"></div><div class="beam r"></div>
+<div class="beam l"></div><div class="beam r"></div><div class="beam c"></div>
 <canvas id="fx"></canvas>
 <button id="soundToggle" aria-label="toggle sound">🔊</button>
 
@@ -174,11 +223,17 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 <!-- RAIN INTRO -->
 <section style="min-height:60svh" class="slide">
   <div class="eyebrow rise">now, look up</div>
-  <div class="line rise d1">it's raining little pieces of us!!<br><span style="font-size:.8em;opacity:.75">scroll slowly, catch them all</span></div>
+  <div class="line rise d1">it's raining little pieces of us ☔💜<br><span style="font-size:.8em;opacity:.75">scroll slowly, catch them all</span></div>
 </section>
 
 <!-- MEMORY RAIN (items are placed by the script) -->
 <section id="rainSec"></section>
+
+<!-- BIG PHOTO -->
+<section class="slide">
+  <div class="eyebrow rise">and my favorite view of all</div>
+  <figure class="bigframe rise d1"><div class="ph" id="bigPh">💜</div><figcaption class="script" id="bigCap">you. always you.</figcaption></figure>
+</section>
 
 <!-- DISTANCE -->
 <section class="slide">
@@ -212,7 +267,9 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 <div id="finale">
   <div class="bebas">HAPPY <span class="strike">25TH</span> <span class="twenty">20TH</span><br>BIRTHDAY NELLY</div>
   <div class="script">forever and always 💜</div>
+  <div class="emoji-row"><span>🎉</span><span>💃</span><span>🥳</span><span>🎂</span><span>🎊</span></div>
   <div class="hint" style="margin-top:14px">sent with love, from mauritius to grenoble 🌍</div>
+  <div class="hint">tap the screen for more fireworks 🎆</div>
   <a class="btn" id="playlistBtn" target="_blank" rel="noopener" style="display:none">your birthday playlist 🎧</a>
   <div class="hint" id="playlistHint" style="display:none">p.s. read the first letter of every song 👀</div>
 </div>
@@ -233,6 +290,10 @@ const PHOTOS = [
   {img:"", emoji:"🌙", caption:"same moon, both of us"},
   {img:"", emoji:"💜", caption:"my favorite person"}
 ];
+
+/* the one BIG photo shown right before the distance part.
+   put a link in img:"" the same way as above. */
+const BIG_PHOTO = {img:"", emoji:"💜", caption:"you. always you."};
 
 /* the cute texts raining between the photos. edit freely. */
 const TEXTS = [
@@ -271,9 +332,10 @@ yours, forever and always 💜`;
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* sparkles */
-for(let i=0;i<26;i++){
+const SPC=['#FFDF9E','#FF6FD8','#7CF2C3','#8FE3FF','#B388FF'];
+for(let i=0;i<30;i++){
   const s=document.createElement('div');s.className='sp';s.textContent='✦';
-  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3.2}s`;
+  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3.2}s;color:${SPC[i%SPC.length]}`;
   document.body.appendChild(s);
 }
 
@@ -352,7 +414,7 @@ document.body.addEventListener('pointerdown',function once(){startAmbient();},{o
 const cvs=document.getElementById('fx'),ctx=cvs.getContext('2d');
 let parts=[],rockets=[],rain=false,launching=false;
 const resize=()=>{cvs.width=innerWidth;cvs.height=innerHeight};resize();addEventListener('resize',resize);
-const CLR=['#F5C86B','#B388FF','#FF6FD8','#FFDF9E','#FFFFFF','#8FE3FF'];
+const CLR=['#F5C86B','#B388FF','#FF6FD8','#FFDF9E','#FFFFFF','#8FE3FF','#7CF2C3','#FF9D6F'];
 function drawHeart(x,y,s,r){ctx.save();ctx.translate(x,y);ctx.rotate(r);ctx.scale(s/14,s/14);
   ctx.beginPath();ctx.moveTo(0,4);ctx.bezierCurveTo(-7,-4,-14,2,0,12);ctx.bezierCurveTo(14,2,7,-4,0,4);ctx.fill();ctx.restore();}
 function burst(x,y,n=40,color){
@@ -403,15 +465,24 @@ items.forEach((it,i)=>{
   el.className='rain-item';
   el.style.setProperty('--rot',(Math.random()*14-7).toFixed(1)+'deg');
   el.style.top=(2+i*(93/(items.length-1)))+'%';
+  const side=i%2; /* alternate left / right so items never pile up */
   if(it.kind==='photo'){
-    el.style.left=`min(${(Math.random()*55).toFixed(0)}%, calc(100% - 175px))`;
-    el.innerHTML=`<figure class="polaroid"><div class="ph">${it.img?`<img src="${it.img}" alt="${it.caption}">`:it.emoji}</div><figcaption>${it.caption}</figcaption></figure>`;
+    const base=side?52+Math.random()*16:2+Math.random()*16;
+    el.style.left=`clamp(0px, ${base.toFixed(0)}%, calc(100% - 215px))`;
+    el.innerHTML=`<figure class="polaroid"><div class="ph g${i%5}">${it.img?`<img src="${it.img}" alt="${it.caption}">`:it.emoji}</div><figcaption>${it.caption}</figcaption></figure>`;
   }else{
-    el.style.left=`min(${(Math.random()*50).toFixed(0)}%, calc(100% - 60vw))`;
-    el.innerHTML=it.kind==='pill'?`<span class="pill">${it.text}</span>`:`<span class="tscript">${it.text}</span>`;
+    const base=side?50+Math.random()*18:4+Math.random()*18;
+    el.style.left=`clamp(0px, ${base.toFixed(0)}%, calc(100% - min(78vw,340px)))`;
+    el.innerHTML=it.kind==='pill'?`<span class="pill p${i%4}">${it.text}</span>`:`<span class="tscript c${i%4}">${it.text}</span>`;
   }
   rainSec.appendChild(el);
 });
+
+/* big photo */
+const bigPh=document.getElementById('bigPh');
+if(BIG_PHOTO.img){bigPh.innerHTML=`<img src="${BIG_PHOTO.img}" alt="${BIG_PHOTO.caption}">`;}
+else{bigPh.textContent=BIG_PHOTO.emoji;}
+document.getElementById('bigCap').textContent=BIG_PHOTO.caption;
 
 /* ── scroll reveals ── */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
@@ -457,7 +528,8 @@ for(let i=0;i<5;i++){
     const s=document.createElement('div');s.className='smoke';s.textContent='💨';c.appendChild(s);
     lit--;
     const msg=document.getElementById('wishMsg');
-    msg.textContent=lit>0?`${lit} more to go…`:'✨ make a wish ✨';
+    const cheers=['woohoo! 💨','what a blow! 🌬️','the flames fear you 🔥','legendary lungs ✨'];
+    msg.textContent=lit>0?`${cheers[Math.random()*cheers.length|0]} ${lit} more to go`:'✨ make a wish ✨';
     if(lit===0){
       chime(1318);stopMic();
       setTimeout(finale,1600);
@@ -504,6 +576,54 @@ function stopMic(){
   if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;}
 }
 
+/* ── joyful extras ── */
+function boing(){if(muted||!AC)return;const t=AC.currentTime;
+  const o=AC.createOscillator(),g=AC.createGain();
+  o.type='sine';o.frequency.setValueAtTime(280,t);o.frequency.exponentialRampToValueAtTime(880,t+.14);
+  g.gain.setValueAtTime(.18,t);g.gain.exponentialRampToValueAtTime(.001,t+.2);
+  o.connect(g).connect(AC.destination);o.start(t);o.stop(t+.22);}
+
+/* dancing headliner letters, tap for confetti */
+const hl=document.querySelector('.headliner');
+hl.innerHTML=[...hl.textContent].map((ch,i)=>`<span style="animation-delay:${(i*.13).toFixed(2)}s">${ch}</span>`).join('');
+hl.style.cursor='pointer';
+hl.addEventListener('click',e=>{chime(1318);burst(e.clientX,e.clientY,32);});
+
+/* floating balloons, pop them! */
+function spawnBalloon(){
+  if(reduceMotion)return;
+  const b=document.createElement('div');b.className='balloon';
+  b.style.background=CLR[Math.random()*4|0];
+  b.style.left=(4+Math.random()*88)+'vw';
+  b.style.animationDuration=(10+Math.random()*8)+'s';
+  b.onclick=e=>{b.classList.add('popped');boing();burst(e.clientX,e.clientY,18);setTimeout(()=>b.remove(),260)};
+  document.body.appendChild(b);
+  setTimeout(()=>b.remove(),19000);
+}
+setInterval(spawnBalloon,3000);
+
+/* sparkles wherever she taps */
+document.addEventListener('pointerdown',e=>{
+  if(e.target.closest('button,a,.candle,.balloon,.rain-item'))return;
+  burst(e.clientX,e.clientY,6);
+});
+
+/* wiggle the raining memories on tap */
+document.querySelectorAll('.rain-item').forEach(el=>{
+  el.addEventListener('click',e=>{
+    el.classList.remove('wiggle');void el.offsetWidth;el.classList.add('wiggle');
+    boing();burst(e.clientX,e.clientY,12);
+  });
+});
+
+/* squishy cake */
+const cw=document.querySelector('.cake-wrap');
+cw.addEventListener('click',e=>{
+  if(e.target.closest('.candle'))return;
+  cw.classList.remove('squish');void cw.offsetWidth;cw.classList.add('squish');
+  pop();burst(e.clientX,e.clientY,14);
+});
+
 /* ── finale: fireworks ── */
 function finale(){
   stopAmbient();
@@ -516,6 +636,7 @@ function finale(){
     document.getElementById('playlistHint').style.display='block';
   }
   let f=0;const fw=setInterval(()=>{launchRocket();if(++f>10)clearInterval(fw);},500);
+  document.getElementById('finale').addEventListener('click',()=>{launchRocket();launchRocket();});
   setTimeout(()=>{if(!muted){ambientOn=true;canonCycle();}},9500);
 }
 </script>
