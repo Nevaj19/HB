@@ -69,8 +69,9 @@ body{
 #kmText{font-family:'Space Mono',monospace;font-size:.68rem;opacity:.85;margin-top:3px;letter-spacing:.04em}
 
 /* ═══ LAYOUT ═══ */
-section{position:relative;z-index:2;min-height:100svh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;max-width:720px;margin:0 auto;padding:90px 24px;text-align:center}
+section{position:relative;z-index:2;min-height:76svh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;max-width:720px;margin:0 auto;padding:56px 24px;text-align:center}
+#hero{min-height:100svh}
 .eyebrow{font-family:'Space Mono',monospace;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
   font-size:.7rem;color:var(--gold);margin-bottom:18px}
 .line{font-size:clamp(1.35rem,5.4vw,1.95rem);font-weight:600;line-height:1.65;max-width:560px}
@@ -121,7 +122,7 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
 
 /* ═══ MEMORY SKY ═══ */
 #memSky{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
-  gap:15svh;max-width:920px;width:100%;min-height:auto;padding:90px 24px}
+  gap:9svh;max-width:920px;width:100%;min-height:auto;padding:48px 24px}
 .rain-row{display:flex;width:100%}
 .rain-row.j0{justify-content:flex-start}
 .rain-row.j1{justify-content:center}
@@ -129,9 +130,9 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
 .rain-item{opacity:0;transform:translateY(-110px) rotate(calc(var(--rot) - 12deg));cursor:pointer;
   transition:opacity .9s ease,transform .9s cubic-bezier(.2,1.4,.4,1)}
 .rain-item.show{opacity:1;transform:translateY(0) rotate(var(--rot))}
-.polaroid{background:var(--white);color:var(--ink);padding:10px 10px 13px;border-radius:6px;width:172px;
+.polaroid{background:var(--white);color:var(--ink);padding:11px 11px 14px;border-radius:6px;width:205px;
   box-shadow:0 18px 44px rgba(0,0,0,.5)}
-.polaroid .ph{width:100%;height:140px;border-radius:4px;display:flex;align-items:center;justify-content:center;
+.polaroid .ph{width:100%;height:170px;border-radius:4px;display:flex;align-items:center;justify-content:center;
   font-size:3rem;overflow:hidden}
 .ph.g0{background:linear-gradient(135deg,var(--lilac),var(--pink))}
 .ph.g1{background:linear-gradient(135deg,var(--pink),var(--peach))}
@@ -145,7 +146,7 @@ section{position:relative;z-index:2;min-height:100svh;display:flex;flex-directio
 .tscript{font-family:'Dancing Script',cursive;font-size:clamp(1.5rem,4.6vw,2.1rem);color:var(--gold);
   text-shadow:0 0 20px rgba(245,200,107,.5);max-width:min(80vw,380px);display:inline-block;line-height:1.25}
 .tscript.alt{color:var(--pink);text-shadow:0 0 20px rgba(255,143,200,.5)}
-@media (min-width:700px){.polaroid{width:210px}.polaroid .ph{height:172px}}
+@media (min-width:700px){.polaroid{width:250px}.polaroid .ph{height:205px}}
 
 /* ═══ BIG PHOTO ═══ */
 .bigframe{background:var(--white);padding:14px 14px 18px;border-radius:10px;transform:rotate(-1.4deg);
@@ -309,7 +310,7 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 </section>
 
 <!-- 3 · MEMORY SKY intro -->
-<section class="slide" style="min-height:70svh">
+<section class="slide" style="min-height:48svh">
   <div class="eyebrow rise">cruising altitude</div>
   <div class="line rise d1">look out the window 🪟<br><b>it's raining memories up here</b><br><span class="small">scroll slowly, catch them all</span></div>
 </section>
