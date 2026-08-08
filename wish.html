@@ -8,7 +8,7 @@
      NELLY'S BIRTHDAY FLIGHT · works as is, nothing required.
      the edit zone is at the top of the script below:
        playlistUrl      your acrostic playlist link (optional)
-       SONG_YOUTUBE_ID  youtube ID of "invisible string instrumental" (optional)
+       SONG_YOUTUBE_ID  youtube ID of the song (optional)
        PHOTOS           your photos, img:"photo1.jpg" if uploaded to the repo
        BIG_PHOTO        the one big photo at the halfway point
        TEXTS            the little messages floating in the sky
@@ -59,10 +59,10 @@ body{
 .party-line{font-size:1.5rem;margin-top:12px;letter-spacing:.32em;animation:bob 2.4s ease-in-out infinite}
 
 /* ═══ FLIGHT HUD ═══ */
-#hud{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:40;text-align:center;
-  background:rgba(14,10,36,.62);border:1px solid rgba(179,136,255,.35);border-radius:16px;
-  padding:9px 18px 8px;backdrop-filter:blur(8px);box-shadow:0 8px 26px rgba(0,0,0,.35)}
-#hud .route{display:flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-weight:700;font-size:.8rem;color:var(--gold)}
+#hud{position:fixed;top:50px;left:0;right:0;margin:0 auto;width:max-content;max-width:92vw;z-index:40;text-align:center;
+  background:rgba(14,10,36,.88);border:1px solid rgba(179,136,255,.35);border-radius:16px;
+  padding:9px 18px 8px;box-shadow:0 8px 26px rgba(0,0,0,.35)}
+#hud .route{display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Space Mono',monospace;font-weight:700;font-size:.8rem;color:var(--gold)}
 #hud .track{position:relative;width:min(130px,26vw);height:2px;background:rgba(251,247,255,.25);border-radius:2px}
 #hud .track::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 8px,rgba(251,247,255,.35) 8px 12px)}
 #planeIcon{position:absolute;top:50%;left:0;transform:translate(-50%,-58%);font-size:1rem;z-index:1;transition:left .15s linear;filter:drop-shadow(0 0 6px rgba(245,200,107,.7))}
@@ -292,7 +292,7 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
       <div><b>seat</b>20N</div>
       <div><b>destination</b>our best memories</div>
       <div><b>baggage</b>8,952 km of love</div>
-      <div><b>age on file</b>20 -+5 😬</div>
+      <div><b>age on file</b>20 ±5 😬</div>
       <div><b>arrival</b>your heart, right on time</div>
     </div>
     <div class="barcode"></div>
@@ -375,10 +375,9 @@ canvas#fx{position:fixed;inset:0;z-index:25;pointer-events:none}
 /* ══ EDIT ZONE ══════════════════════════════════════════════════ */
 const playlistUrl = ""; // your acrostic playlist link, button appears at the finale
 
-/* youtube ID of the song, the part after v= in the link.
-   search "invisible string instrumental", copy its ID.
-   leave empty to keep the built in music box melody. */
-const SONG_YOUTUBE_ID = "CzVNX_fErcE&list=RDCzVNX_fErcE&start_radio=1";
+/* youtube ID of the song, ONLY the part right after v= in the link,
+   nothing after any & symbol. leave empty for the music box melody. */
+const SONG_YOUTUBE_ID = "CzVNX_fErcE";
 
 /* your photos floating in the memory sky.
    put img:"photo1.jpg" if the photo is uploaded to your repo,
@@ -415,22 +414,20 @@ const TEXTS = [
 ];
 
 const letter =
-`my Nelly,
+`Amourr de toutes mes vies,
 
-i know i'm not there today
-and i hate that part.
+i know im not there today
+and i hate that part but im always in your heart
 
-but every morning you're my first thought
-and every night you're my last.
-the distance is just geography.
+but every morning youre my first thought
 you have never once felt far.
 
-you're out there chasing your dream
-and i couldn't be more proud of you.
+Ik youre out there chasing your dream nahh OUR dream now
+and i couldnt be more proud of you.
 
-happy birthday my love.
-save me a dance for when i see you.
+happiest birthday my love.
 
+i love youu soo soo much
 yours, forever and always 💜`;
 /* ══ END OF EDIT ZONE ═══════════════════════════════════════════ */
 
@@ -626,9 +623,10 @@ document.getElementById('bigCap').textContent=BIG_PHOTO.caption;
 
 /* her song via youtube */
 if(SONG_YOUTUBE_ID){
+  const ytid=SONG_YOUTUBE_ID.split(/[?&\/]/)[0].trim();
   const box=document.getElementById('ytBox');
   box.style.display='block';
-  document.getElementById('ytFrame').src=`https://www.youtube.com/embed/${SONG_YOUTUBE_ID}?loop=1&playlist=${SONG_YOUTUBE_ID}`;
+  document.getElementById('ytFrame').src=`https://www.youtube.com/embed/${ytid}?loop=1&playlist=${ytid}`;
   document.getElementById('musicHint').textContent='press play on our song 🎶 tap ➖ to tuck it away, then scroll babyyy💜';
   document.getElementById('ytClose').onclick=()=>{document.getElementById('ytFrame').src='';box.remove();};
   const ymin=document.getElementById('ytMin');
@@ -704,7 +702,7 @@ for(let i=0;i<5;i++){
     ensureAC();c.classList.add('out');pop();
     const s=document.createElement('div');s.className='smoke';s.textContent='💨';c.appendChild(s);
     lit--;
-    const cheers=['woohoo! 💨','what a blow! 🌬️','the flames fear you 🔥','legendary lungs ✨'];
+    const cheers=['woohoo! 💨','what a blow!!!!!!','the flames fear you 🔥','legendary lungs ✨'];
     const msg=document.getElementById('wishMsg');
     msg.textContent=lit>0?`${cheers[Math.random()*cheers.length|0]} ${lit} more to go`:'✨ make a wish ✨';
     if(lit===0){
@@ -731,10 +729,10 @@ document.getElementById('micBtn').onclick=async function(){
     src.connect(analyser);
     micData=new Uint8Array(analyser.fftSize);
     micOn=true;this.style.display='none';
-    micStatus.textContent='mic is on! now blow like it\u2019s a real cake 🌬️🎂';
+    micStatus.textContent='mic is on! now blow like it\u2019s a real cake🎂';
     micLoop();
   }catch(err){
-    micStatus.textContent='no mic access here, tap the flames instead 🔥';
+    micStatus.textContent='no mic access here, tap the flames instead';
   }
 };
 function micLoop(){
